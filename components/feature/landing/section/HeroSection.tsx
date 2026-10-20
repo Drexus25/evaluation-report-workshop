@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "@/components/ui/Button";
 import RoleBadge from "@/components/ui/RoleBadge";
+import Card from "@/components/ui/Card";
 import StatCounterItem from "../component/StatCounterItem";
 import DashboardMockup from "../component/DashboardMockup";
 
@@ -64,7 +65,11 @@ export const HeroSection: React.FC = () => {
         </div>
 
         <div className="pt-6 pb-4 w-full max-w-4xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-6 px-4 rounded-2xl bg-white/90 border border-neutral-200/70 shadow-sm backdrop-blur-xs divide-y md:divide-y-0 md:divide-x divide-neutral-100">
+          <Card
+            variant="default"
+            padding="none"
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 py-6 px-4 bg-white/90 backdrop-blur-xs divide-y md:divide-y-0 md:divide-x divide-neutral-100"
+          >
             <StatCounterItem
               value="100%"
               label="Penilaian Objektif"
@@ -85,7 +90,7 @@ export const HeroSection: React.FC = () => {
               label="Siap Cetak Sidang Pleno"
               sublabel="Tanda Tangan Digital"
             />
-          </div>
+          </Card>
         </div>
 
         <div className="pt-4">
