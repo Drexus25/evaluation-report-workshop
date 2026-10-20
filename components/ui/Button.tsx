@@ -14,13 +14,13 @@ export interface ButtonProps
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-[#1F6F78] text-white hover:bg-[#195960] active:bg-[#14454B] focus-visible:ring-[#1F6F78] shadow-sm",
+    "bg-primary text-surface hover:bg-primary-700 active:bg-primary-800 focus-visible:ring-primary shadow-sm",
   secondary:
-    "bg-white text-[#1F6F78] hover:bg-neutral-100 active:bg-neutral-200 focus-visible:ring-white shadow-sm border border-neutral-200/50",
+    "bg-surface text-primary hover:bg-neutral-100 active:bg-neutral-200 focus-visible:ring-surface shadow-sm border border-neutral-200/50",
   outline:
-    "bg-transparent text-white border-2 border-[#1F6F78] hover:bg-[#1F6F78]/15 active:bg-[#1F6F78]/25 focus-visible:ring-[#1F6F78]",
+    "bg-transparent text-surface border-2 border-primary hover:bg-primary/15 active:bg-primary/25 focus-visible:ring-primary",
   ghost:
-    "bg-[#8E9398] text-[#0F4349] hover:bg-[#7D8287] active:bg-[#6C7176] focus-visible:ring-neutral-400",
+    "bg-neutral-400 text-primary-900 hover:bg-neutral-500 active:bg-neutral-600 focus-visible:ring-neutral-400",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
