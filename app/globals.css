@@ -1,26 +1,263 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap");
 @import "tailwindcss";
 
+
+@theme {
+
+  --color-primary: #1F6F78;
+  --color-primary-50: #EBF5F6;
+  --color-primary-100: #D7EDF0;
+  --color-primary-200: #B3DDE3;
+  --color-primary-300: #7EBDC7;
+  --color-primary-400: #4A9BA8;
+  --color-primary-500: #2A808C;
+  --color-primary-600: #1F6F78;
+  --color-primary-700: #195960;
+  --color-primary-800: #14454B;
+  --color-primary-900: #10373C;
+  --color-primary-950: #082124;
+
+  --color-secondary: #3A8C9A;
+  --color-secondary-50: #F1F8F9;
+  --color-secondary-100: #DCF0F3;
+  --color-secondary-200: #BAE2E8;
+  --color-secondary-300: #8DCED8;
+  --color-secondary-400: #5FA7B3;
+  --color-secondary-500: #3A8C9A;
+  --color-secondary-600: #2E717D;
+  --color-secondary-700: #255A63;
+  --color-secondary-800: #1E474E;
+  --color-secondary-900: #17373C;
+  --color-secondary-950: #0A1C1F;
+
+  --color-tertiary: #57D5D0;
+  --color-accent: #57D5D0;
+  --color-accent-50: #EFFFFE;
+  --color-accent-100: #D5FAF8;
+  --color-accent-200: #AFF5F1;
+  --color-accent-300: #81EEE8;
+  --color-accent-400: #57D5D0;
+  --color-accent-500: #26BFB9;
+  --color-accent-600: #189A95;
+  --color-accent-700: #157A77;
+  --color-accent-800: #14605E;
+  --color-accent-900: #144F4E;
+  --color-accent-950: #052F2F;
+
+  --color-neutral-50: #F8FAFA;
+  --color-neutral-100: #F1F4F5;
+  --color-neutral-200: #E2E6E8;
+  --color-neutral-300: #CBD2D5;
+  --color-neutral-400: #9AA3A8;
+  --color-neutral-500: #6B7479;
+  --color-neutral-600: #4F565A;
+  --color-neutral-700: #393D3F;
+  --color-neutral-800: #2B2E30;
+  --color-neutral-900: #1F2122;
+  --color-neutral-950: #131415;
+
+  --color-canvas: #F4F6F8;
+  --color-surface: #FFFFFF;
+  --color-surface-subtle: #F8FAFA;
+
+  --color-status-success: #0D9488;
+  --color-status-success-bg: #D4F7EE;
+  --color-status-success-text: #0F766E;
+
+  --color-status-warning: #D97706;
+  --color-status-warning-bg: #FEF3C7;
+  --color-status-warning-text: #92400E;
+
+  --color-status-destructive: #DC2626;
+  --color-status-destructive-bg: #FEE2E2;
+  --color-status-destructive-text: #B91C1C;
+
+  --color-status-muted: #393D3F;
+  --color-status-muted-bg: #F3F4F6;
+  --color-status-muted-text: #4F565A;
+
+  --font-headline: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 0.75rem;
+  --spacing-lg: 1rem;
+  --spacing-xl: 1.5rem;
+  --spacing-2xl: 2rem;
+  --spacing-3xl: 3rem;
+  --spacing-4xl: 4rem;
+
+  --width-container: 1280px;
+  --width-canvas: 1440px;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --primary: #1F6F78;
+  --secondary: #3A8C9A;
+  --tertiary: #57D5D0;
+  --accent: #57D5D0;
+
+  --neutral-dark: #393D3F;
+  --neutral-body: #393D3F;
+  --neutral-muted: #6B7479;
+  --neutral-border: #E2E6E8;
+  --canvas-bg: #F4F6F8;
+  --surface-bg: #FFFFFF;
+
+  --success: #0D9488;
+  --success-bg: #D4F7EE;
+  --success-text: #0F766E;
+
+  --warning: #D97706;
+  --warning-bg: #FEF3C7;
+  --warning-text: #92400E;
+
+  --destructive: #DC2626;
+  --destructive-bg: #FEE2E2;
+  --destructive-text: #B91C1C;
+
+  --muted: #393D3F;
+  --muted-bg: #F3F4F6;
+  --muted-text: #4F565A;
+
+  --font-headline: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+  --space-3xl: 48px;
+  --space-4xl: 64px;
+
+  --layout-canvas-max: 1440px;
+  --layout-container-max: 1280px;
+  --gutter-desktop: 24px;
+  --gutter-mobile: 16px;
+  --margin-mobile: 16px;
+
+  --background: var(--canvas-bg);
+  --foreground: var(--neutral-dark);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #f4f4f4;
-    --foreground: #ededed;
-  }
+html {
+  font-family: var(--font-body);
+  background-color: var(--canvas-bg);
+  color: var(--neutral-dark);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color: var(--neutral-dark);
+  background-color: var(--canvas-bg);
+  min-height: 100vh;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+.h1 {
+  font-family: var(--font-headline);
+  font-size: 32px;
+  line-height: 1.25;
+  font-weight: 700;
+  color: var(--neutral-dark);
+  margin-top: 0;
+  margin-bottom: var(--space-md);
+}
+
+h2,
+.h2 {
+  font-family: var(--font-headline);
+  font-size: 24px;
+  line-height: 1.33;
+  font-weight: 600;
+  color: var(--neutral-dark);
+  margin-top: 0;
+  margin-bottom: var(--space-sm);
+}
+
+h3,
+.h3 {
+  font-family: var(--font-headline);
+  font-size: 18px;
+  line-height: 1.44;
+  font-weight: 600;
+  color: var(--neutral-dark);
+  margin-top: 0;
+  margin-bottom: var(--space-xs);
+}
+
+p,
+.text-body {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+.text-subtitle {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+}
+
+.text-caption,
+.text-badge {
+  font-family: var(--font-body);
+  font-size: 11px;
+  line-height: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.text-meta {
+  font-family: var(--font-body);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+}
+
+.layout-canvas {
+  width: 100%;
+  max-width: var(--layout-canvas-max);
+  margin-inline: auto;
+}
+
+.layout-container {
+  width: 100%;
+  max-width: var(--layout-container-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter-desktop);
+}
+
+.grid-blueprint {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--gutter-desktop);
+}
+
+@media (max-width: 648px) {
+  .layout-container {
+    padding-inline: var(--margin-mobile);
+  }
+
+  .grid-blueprint {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--gutter-mobile);
+  }
 }
