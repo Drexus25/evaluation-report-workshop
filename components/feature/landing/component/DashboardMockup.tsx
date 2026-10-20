@@ -1,5 +1,6 @@
 import React from "react";
 import RoleBadge from "@/components/ui/RoleBadge";
+import Card from "@/components/ui/Card";
 
 export const DashboardMockup: React.FC = () => {
   return (
@@ -34,7 +35,11 @@ export const DashboardMockup: React.FC = () => {
       </div>
       <div className="p-4 sm:p-6 lg:p-8 bg-linear-to-b from-white to-neutral-50/50">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          <div className="lg:col-span-4 bg-white rounded-2xl border border-neutral-200/80 p-5 shadow-xs space-y-4">
+          <Card
+            variant="default"
+            padding="none"
+            className="lg:col-span-4 p-5 shadow-xs space-y-4"
+          >
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-xl bg-primary text-white flex items-center justify-center font-headline font-bold text-lg shadow-xs shrink-0">
                 RZ
@@ -90,7 +95,7 @@ export const DashboardMockup: React.FC = () => {
                 </span>
               </div>
             </div>
-          </div>
+          </Card>
 
           <div className="lg:col-span-8 space-y-4">
             <div className="rounded-xl bg-primary text-white p-4 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2">

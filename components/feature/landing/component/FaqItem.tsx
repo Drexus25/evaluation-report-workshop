@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Card from "@/components/ui/Card";
 
 export interface FaqItemProps {
   question: string;
@@ -16,7 +17,11 @@ export const FaqItem: React.FC<FaqItemProps> = ({
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
   return (
-    <div className="rounded-2xl border border-neutral-200/80 bg-white shadow-xs overflow-hidden transition-colors hover:border-primary-200">
+    <Card
+      variant="default"
+      padding="none"
+      className="overflow-hidden transition-colors hover:border-primary-200"
+    >
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -41,7 +46,7 @@ export const FaqItem: React.FC<FaqItemProps> = ({
           {answer}
         </div>
       )}
-    </div>
+    </Card>
   );
 };
 
