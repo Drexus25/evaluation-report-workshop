@@ -46,7 +46,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className="w-full flex flex-col font-sans">
-        {/* Label Header: Label Kiri & Label/Link Kanan */}
         {(label || labelRight) && (
           <div className="flex items-center justify-between mb-2 select-none">
             {label && (
@@ -66,7 +65,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           </div>
         )}
 
-        {/* Input Container Box sesuai Desain Figma */}
         <div
           className={`relative flex items-center w-full rounded-xl bg-neutral-100 border transition-all duration-200 ${
             isError
@@ -78,7 +76,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
               : ""
           }`}
         >
-          {/* Left Icon (misal Icon ID Card atau Gembok) */}
           {leftIcon && (
             <div className="absolute left-3.5 text-neutral-500 flex items-center pointer-events-none">
               {leftIcon}
@@ -105,7 +102,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             {...props}
           />
 
-          {/* Password Eye Toggle Icon */}
           {isPasswordType && (
             <button
               type="button"
@@ -148,7 +144,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             </button>
           )}
 
-          {/* Right Custom Icon jika bukan password */}
           {!isPasswordType && rightIcon && (
             <div className="absolute right-3.5 text-neutral-500 flex items-center">
               {rightIcon}
@@ -156,7 +151,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
         </div>
 
-        {/* Error State Display */}
         {isError && (
           <p
             id={`${inputId}-error`}
@@ -177,7 +171,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           </p>
         )}
 
-        {/* Helper Text */}
         {!isError && helperText && (
           <p id={`${inputId}-helper`} className="text-xs text-neutral-500 mt-1.5">
             {helperText}

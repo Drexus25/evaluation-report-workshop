@@ -104,7 +104,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                 ? `${textareaId}-helper`
                 : undefined
             }
-            className={`w-full bg-transparent py-3 px-4 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none resize-y min-h-[96px] ${className}`}
+            className={`w-full bg-transparent py-3 px-4 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none resize-y min-h-24 ${className}`}
             {...props}
           />
         </div>
