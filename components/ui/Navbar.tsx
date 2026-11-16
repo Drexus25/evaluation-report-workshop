@@ -99,7 +99,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
         {/* Tengah: Menu Navigasi (Desktop) */}
         <nav className="hidden md:flex items-center gap-10">
           <NavLink href="/">Beranda</NavLink>
-          <NavLink href="/report">Fitur Raport</NavLink>
+          <NavLink href="/raport">Fitur Raport</NavLink>
           <NavLink href="/panduan">Panduan</NavLink>
         </nav>
 
@@ -201,7 +201,7 @@ export default function Navbar({ className = "" }: NavbarProps) {
             <NavLink href="/" onClick={() => setMobileMenuOpen(false)}>
               Beranda
             </NavLink>
-            <NavLink href="/report" onClick={() => setMobileMenuOpen(false)}>
+            <NavLink href="/raport" onClick={() => setMobileMenuOpen(false)}>
               Fitur Raport
             </NavLink>
             <NavLink href="/panduan" onClick={() => setMobileMenuOpen(false)}>
