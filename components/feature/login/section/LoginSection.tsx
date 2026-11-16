@@ -21,7 +21,6 @@ export default function LoginSection() {
     const onSubmit = (data: LoginFormValues) => {
         setError(null)
         console.log(data)
-        // TODO: integrate with backend
     }
 
     return (

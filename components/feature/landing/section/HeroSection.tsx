@@ -35,7 +35,6 @@ export const HeroSection: React.FC = () => {
           </p>
         </div>
 
-        {/* CTA Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
           <Button
             variant="primary"

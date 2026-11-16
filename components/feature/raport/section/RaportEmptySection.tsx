@@ -33,7 +33,7 @@ export default function RaportEmptySection({ onRefresh }: RaportEmptySectionProp
 
         <div className="space-y-2">
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-neutral-100 text-neutral-600 border border-neutral-200">
-            HTTP 404 • Raport Belum Tersedia
+            Raport Belum Tersedia
           </span>
           <h2 className="font-headline text-xl sm:text-2xl font-bold text-neutral-900">
             Raport Evaluasi Belum Diterbitkan

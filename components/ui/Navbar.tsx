@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Button from "./Button";
 
-// Sub-komponen NavLink
 interface NavLinkProps {
   href: string;
   children: React.ReactNode;
@@ -39,7 +38,6 @@ function NavLink({
   );
 }
 
-// Sub-komponen Logo EvalOrg
 function Logo({
   href = "/",
   className = "",
@@ -52,7 +50,6 @@ function Logo({
       href={href}
       className={`inline-flex items-center gap-2.5 group transition-opacity hover:opacity-90 ${className}`}
     >
-      {/* Icon Kotak Rounded Teal dengan Grafik Chart */}
       <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center text-surface shadow-xs transition-transform group-hover:scale-105">
         <svg
           width="20"
@@ -71,7 +68,6 @@ function Logo({
         </svg>
       </div>
 
-      {/* Teks Brand */}
       <span className="text-xl font-bold text-primary tracking-tight font-headline">
         EvalOrg
       </span>
@@ -85,25 +81,27 @@ interface NavbarProps {
 
 export default function Navbar({ className = "" }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 w-full z-50 bg-surface/95 backdrop-blur-md border-b border-neutral-200 shadow-xs transition-all ${className}`}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
-        {/* Kiri: Brand Logo */}
         <div className="flex-shrink-0">
           <Logo />
         </div>
 
-        {/* Tengah: Menu Navigasi (Desktop) */}
         <nav className="hidden md:flex items-center gap-10">
           <NavLink href="/">Beranda</NavLink>
           <NavLink href="/raport">Fitur Raport</NavLink>
           <NavLink href="/panduan">Panduan</NavLink>
         </nav>
 
-        {/* Kanan: Actions (Login Button & User Profile Icon) */}
         <div className="hidden sm:flex items-center gap-3">
           <Link href="/login">
             <Button variant="primary" size="md">
@@ -132,7 +130,6 @@ export default function Navbar({ className = "" }: NavbarProps) {
           </Link>
         </div>
 
-        {/* Tombol Hamburger & Profile untuk Mobile */}
         <div className="flex md:hidden items-center gap-2">
           <Link
             href="/login"
@@ -194,7 +191,6 @@ export default function Navbar({ className = "" }: NavbarProps) {
         </div>
       </div>
 
-      {/* Mobile Dropdown Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-surface border-b border-neutral-200 px-6 py-4 flex flex-col gap-4 shadow-lg animate-in slide-in-from-top-2 duration-200">
           <nav className="flex flex-col gap-3">

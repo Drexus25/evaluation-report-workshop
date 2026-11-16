@@ -52,7 +52,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 
     return (
       <div className="w-full flex flex-col font-sans">
-        {/* Label Header: Label Kiri & Label/Keterangan Kanan */}
         {(label || labelRight) && (
           <div className="flex items-center justify-between mb-2 select-none">
             {label && (
@@ -74,7 +73,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           </div>
         )}
 
-        {/* Textarea Container Box */}
         <div
           className={`relative flex flex-col w-full rounded-xl bg-neutral-100 border transition-all duration-200 ${
             isError
@@ -109,7 +107,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           />
         </div>
 
-        {/* Footer Row: Error / Helper Text di Kiri & Character Counter di Kanan */}
         <div className="flex items-center justify-between mt-1.5 gap-2">
           <div className="flex-1">
             {isError && (
@@ -139,7 +136,6 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
             )}
           </div>
 
-          {/* Character Counter Opsional */}
           {showCount && maxLength && (
             <div className="text-[11px] text-neutral-400 font-medium shrink-0">
               {charCount}/{maxLength}

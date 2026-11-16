@@ -1,11 +1,11 @@
 import React from "react";
 
 export type RoleBadgeVariant =
-  | "bph" // Role: BPH Inti (solid teal bg-primary text-surface)
-  | "staff" // Role: Staff / Departemen (soft gray bg-neutral-100 text-neutral-700)
-  | "verified" // Status: Terverifikasi (bg hijau muda + dot hijau)
-  | "draft" // Status: Draft Pengajuan (bg kuning muda + dot amber)
-  | "locked"; // Status: Terkunci (bg abu muda + dot abu)
+  | "bph"
+  | "staff"
+  | "verified"
+  | "draft"
+  | "locked";
 
 export type RoleBadgeSize = "sm" | "md" | "lg";
 
@@ -21,7 +21,6 @@ const variantStyles: Record<
   RoleBadgeVariant,
   { container: string; dot?: string; defaultHasDot: boolean }
 > = {
-  // Role Badges sesuai penugasan BPH / Staff
   bph: {
     container:
       "bg-primary text-surface font-bold shadow-xs hover:bg-primary-700 transition-colors",
@@ -32,8 +31,6 @@ const variantStyles: Record<
       "bg-neutral-100 text-neutral-700 border border-neutral-200/60 font-medium hover:bg-neutral-200 transition-colors",
     defaultHasDot: false,
   },
-
-  // Status Badges & Tags sesuai Figma
   verified: {
     container:
       "bg-status-success-bg text-status-success-text border border-status-success/20",
@@ -70,7 +67,6 @@ export function RoleBadge({
 }: RoleBadgeProps) {
   const content = children || role;
 
-  // Otomatis tentukan variant jika tidak diberikan secara eksplisit
   const resolveVariant = (): RoleBadgeVariant => {
     if (variant) return variant;
     if (typeof content === "string") {
@@ -104,6 +100,5 @@ export function RoleBadge({
   );
 }
 
-// Alias export agar bisa dipanggil sebagai Badge atau RoleBadge
 export const Badge = RoleBadge;
 export default RoleBadge;
