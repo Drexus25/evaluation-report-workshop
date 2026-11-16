@@ -16,15 +16,13 @@ import { RoleBadge } from "@/components/ui/RoleBadge";
 import Navbar from "@/components/ui/Navbar";
 
 export default function ComponentPreviewPage() {
-  const [activeTab, setActiveTab] = useState<"all" | "button" | "card" | "badge" | "navbar">("all");
+  const [activeTab] = useState<"all" | "button" | "card" | "badge" | "navbar">("all");
   const [isButtonLoading, setIsButtonLoading] = useState(false);
 
   return (
     <div className="min-h-screen bg-canvas text-neutral-700 antialiased font-body pb-24">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-10 space-y-16">
-        {/* ==========================================================================
-            1. BUTTON COMPONENT
-            ========================================================================== */}
+        
         {(activeTab === "all" || activeTab === "button") && (
           <section id="button" className="space-y-8 scroll-mt-24">
             <div className="border-b border-neutral-200 pb-4">
@@ -43,7 +41,7 @@ export default function ComponentPreviewPage() {
               </div>
             </div>
 
-            {/* Dark Visual Specimen Showcase (Matching the User's Blueprint) */}
+            
             <div className="bg-[#141718] text-white rounded-3xl p-8 sm:p-10 shadow-lg border border-neutral-800">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-neutral-800">
                 <div>
@@ -59,9 +57,9 @@ export default function ComponentPreviewPage() {
                 </span>
               </div>
 
-              {/* Grid 4 Varian Utama */}
+              
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8">
-                {/* Primary */}
+                
                 <div className="space-y-3">
                   <div className="flex items-center justify-between text-xs text-neutral-400 font-mono">
                     <span>Variant: &quot;primary&quot;</span>
@@ -72,7 +70,7 @@ export default function ComponentPreviewPage() {
                   </Button>
                 </div>
 
-                {/* Secondary */}
+                
                 <div className="space-y-3">
                   <div className="flex items-center justify-between text-xs text-neutral-400 font-mono">
                     <span>Variant: &quot;secondary&quot;</span>
@@ -83,7 +81,7 @@ export default function ComponentPreviewPage() {
                   </Button>
                 </div>
 
-                {/* Outline */}
+                
                 <div className="space-y-3">
                   <div className="flex items-center justify-between text-xs text-neutral-400 font-mono">
                     <span>Variant: &quot;outline&quot;</span>
@@ -94,7 +92,7 @@ export default function ComponentPreviewPage() {
                   </Button>
                 </div>
 
-                {/* Ghost */}
+                
                 <div className="space-y-3">
                   <div className="flex items-center justify-between text-xs text-neutral-400 font-mono">
                     <span>Variant: &quot;ghost&quot;</span>
@@ -107,9 +105,9 @@ export default function ComponentPreviewPage() {
               </div>
             </div>
 
-            {/* Light Canvas Variations & Sizes */}
+            
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Sizes (sm, md, lg) */}
+              
               <Card variant="default" padding="lg">
                 <CardHeader>
                   <CardTitle as="h3">Button Sizes</CardTitle>
@@ -140,7 +138,7 @@ export default function ComponentPreviewPage() {
                 </CardContent>
               </Card>
 
-              {/* Interactive States (Loading & Disabled) */}
+              
               <Card variant="default" padding="lg">
                 <CardHeader>
                   <CardTitle as="h3">States & Feedbacks</CardTitle>
@@ -173,7 +171,7 @@ export default function ComponentPreviewPage() {
                 </CardContent>
               </Card>
 
-              {/* Icons Support */}
+              
               <Card variant="default" padding="lg">
                 <CardHeader>
                   <CardTitle as="h3">With Icons</CardTitle>
@@ -224,9 +222,7 @@ export default function ComponentPreviewPage() {
           </section>
         )}
 
-        {/* ==========================================================================
-            2. ROLEBADGE / BADGE COMPONENT
-            ========================================================================== */}
+        
         {(activeTab === "all" || activeTab === "badge") && (
           <section id="badge" className="space-y-8 scroll-mt-24">
             <div className="border-b border-neutral-200 pb-4">
@@ -246,7 +242,7 @@ export default function ComponentPreviewPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* All Variants */}
+              
               <Card variant="default" padding="lg">
                 <CardHeader bordered>
                   <CardTitle as="h3">Semua Varian Status & Role</CardTitle>
@@ -298,7 +294,7 @@ export default function ComponentPreviewPage() {
                 </CardContent>
               </Card>
 
-              {/* Sizes & Dot Controls */}
+              
               <Card variant="default" padding="lg">
                 <CardHeader bordered>
                   <CardTitle as="h3">Ukuran & Opsi Dot</CardTitle>
@@ -359,9 +355,7 @@ export default function ComponentPreviewPage() {
           </section>
         )}
 
-        {/* ==========================================================================
-            3. CARD COMPONENT
-            ========================================================================== */}
+        
         {(activeTab === "all" || activeTab === "card") && (
           <section id="card" className="space-y-8 scroll-mt-24">
             <div className="border-b border-neutral-200 pb-4">
@@ -381,7 +375,7 @@ export default function ComponentPreviewPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {/* Variant: Default */}
+              
               <Card variant="default" padding="md">
                 <CardHeader>
                   <CardTitle as="h4">Default</CardTitle>
@@ -395,7 +389,7 @@ export default function ComponentPreviewPage() {
                 </CardFooter>
               </Card>
 
-              {/* Variant: Subtle */}
+              
               <Card variant="subtle" padding="md">
                 <CardHeader>
                   <CardTitle as="h4">Subtle</CardTitle>
@@ -409,7 +403,7 @@ export default function ComponentPreviewPage() {
                 </CardFooter>
               </Card>
 
-              {/* Variant: Outline */}
+              
               <Card variant="outline" padding="md">
                 <CardHeader>
                   <CardTitle as="h4">Outline</CardTitle>
@@ -423,7 +417,7 @@ export default function ComponentPreviewPage() {
                 </CardFooter>
               </Card>
 
-              {/* Variant: Interactive */}
+              
               <Card variant="interactive" padding="md">
                 <CardHeader>
                   <CardTitle as="h4">Interactive</CardTitle>
@@ -438,7 +432,7 @@ export default function ComponentPreviewPage() {
               </Card>
             </div>
 
-            {/* Compound Card Composition Example */}
+            
             <div className="pt-2">
               <div className="mb-4">
                 <h3 className="text-lg font-headline font-semibold text-neutral-800">
@@ -526,9 +520,7 @@ export default function ComponentPreviewPage() {
           </section>
         )}
 
-        {/* ==========================================================================
-            4. NAVBAR COMPONENT
-            ========================================================================== */}
+        
         {(activeTab === "all" || activeTab === "navbar") && (
           <section id="navbar" className="space-y-8 scroll-mt-24">
             <div className="border-b border-neutral-200 pb-4">
@@ -560,10 +552,10 @@ export default function ComponentPreviewPage() {
                 <CardMeta>Fixed Header Component</CardMeta>
               </div>
 
-              {/* Viewport frame mockup */}
+              
               <div className="relative border-b border-neutral-200 bg-neutral-100 min-h-[140px] flex items-center justify-center p-4">
                 <div className="w-full bg-surface rounded-xl shadow-xs border border-neutral-200 overflow-hidden">
-                  {/* Navbar disisipkan secara statis di dalam mockup */}
+                  
                   <div className="scale-95 origin-top">
                     <Navbar className="!static !shadow-none !border-0" />
                   </div>

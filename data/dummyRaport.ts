@@ -1,108 +1,197 @@
-import { RaportData, User } from "@/types";
+import { Aspect, RaportData, User } from "@/types";
+
+export const dummyAccounts = {
+  admin: {
+    email: "admin@raport.test",
+    password: "password123",
+    role: "admin",
+  },
+  bph: {
+    email: "bph1@raport.test",
+    password: "password123",
+    role: "bph",
+  },
+  staff: {
+    email: "staff1@raport.test",
+    password: "password123",
+    role: "staff",
+  },
+};
 
 export const dummyUserBph: User = {
-  id: "usr_bph_001",
-  user_id: "usr_bph_001",
-  name: "Muhammad Zaki Pratama",
-  nim: "22081010045",
-  email: "zaki.pratama@evalorg.ac.id",
+  id: "b10b3a32-15f1-4db8-9e55-320d750c8221",
+  name: "Bima Arya Pratama",
+  email: "bph1@raport.test",
   role: "bph",
-  department: "Badan Pengurus Harian (Ketua Umum)",
-  period: "Semester Genap 2024/2025",
+  position: "Ketua BPH",
+  ministry: "Presidium BPH Inti",
+  nim: "22081010045",
+  period: "Semester Ganjil 2026/2027",
 };
 
 export const dummyRaportBph: RaportData = {
-  id: "rpt_bph_001",
-  user_id: "usr_bph_001",
+  id: "8ca6c18f-a496-4122-bcfa-f45853fba881",
+  user_id: "b10b3a32-15f1-4db8-9e55-320d750c8221",
+  name: "Bima Arya Pratama",
+  role: "bph",
+  position: "Ketua BPH",
+  ministry: "Presidium BPH Inti",
   user: dummyUserBph,
   scores: [
     {
-      aspect_id: "asp_bph_01",
-      aspect_name: "Kepemimpinan & Visi Strategis",
+      aspect_id: "22222222-2222-2222-2222-222222222201",
+      aspect_name: "Kepemimpinan Strategis",
       score: 92,
-      notes: "Mampu memimpin rapat pleno secara terarah dan merumuskan program tepat sasaran.",
+      notes: "Mampu memimpin koordinasi lintas kementerian dan merumuskan kebijakan yang solutif.",
     },
     {
-      aspect_id: "asp_bph_02",
-      aspect_name: "Komunikasi & Koordinasi Antardivisi",
+      aspect_id: "22222222-2222-2222-2222-222222222202",
+      aspect_name: "Koordinasi & Tata Kelola",
       score: 88,
-      notes: "Respon aktif dalam sinkronisasi antar-kepala departemen.",
+      notes: "Rapat pleno dan tindak lanjut monitoring program berjalan teratur.",
     },
     {
-      aspect_id: "asp_bph_03",
-      aspect_name: "Manajemen Krisis & Problem Solving",
+      aspect_id: "22222222-2222-2222-2222-222222222203",
+      aspect_name: "Manajemen Krisis & Pengambilan Keputusan",
       score: 90,
-      notes: "Cepat mengambil mitigasi saat terjadi kendala logistik kegiatan.",
+      notes: "Cepat dan tepat dalam meredam dinamika organisasi serta risiko kegiatan.",
     },
     {
-      aspect_id: "asp_bph_04",
-      aspect_name: "Akuntabilitas & Integritas Organisasi",
+      aspect_id: "22222222-2222-2222-2222-222222222204",
+      aspect_name: "Integritas & Akuntabilitas",
       score: 94,
-      notes: "Disiplin tinggi terhadap transparansi anggaran dan laporan pertanggungjawaban.",
+      notes: "Transparan dan disiplin dalam penyusunan laporan pertanggungjawaban.",
     },
   ],
   average_score: 91.0,
-  evaluation:
-    "Menunjukkan kepemimpinan yang sangat solid dan berdedikasi tinggi dalam mengarahkan roda organisasi selama satu semester ini. Hubungan kerja dengan jajaran BPH dan seluruh departemen terjalin secara kondusif dan akuntabel. Catatan untuk ke depannya: tingkatkan mekanisme kontrol berkala terhadap delegasi tugas ke koordinator divisi agar beban kerja tetap seimbang.",
-  created_at: "2025-06-15T10:30:00Z",
-  created_by: "Administrator Pusat",
+  overall_evaluation:
+    "Kepemimpinan sangat matang dalam memandu arah kebijakan organisasi. Hubungan sinergis dengan seluruh kementerian terbangun solid dan akuntabel. Rekomendasi: terus optimalkan pemberdayaan staf muda pada siklus berikutnya.",
+  created_at: "2026-10-18T10:00:00Z",
+  updated_at: "2026-10-18T10:00:00Z",
+  created_by: "Admin Pusat",
 };
 
 export const dummyUserStaff: User = {
-  id: "usr_stf_002",
-  user_id: "usr_stf_002",
-  name: "Annisa Maharani Putri",
-  nim: "23081010112",
-  email: "annisa.maharani@evalorg.ac.id",
+  id: "e20b3a32-15f1-4db8-9e55-320d750c8227",
+  name: "Budi Santoso",
+  email: "staff1@raport.test",
   role: "staff",
-  department: "Departemen Komunikasi & Informasi",
-  period: "Semester Genap 2024/2025",
+  position: "Staff Ahli",
+  ministry: "Kemenhumas",
+  nim: "23081010112",
+  period: "Semester Ganjil 2026/2027",
 };
 
 export const dummyRaportStaff: RaportData = {
-  id: "rpt_stf_002",
-  user_id: "usr_stf_002",
+  id: "7ca6c18f-a496-4122-bcfa-f45853fba880",
+  user_id: "e20b3a32-15f1-4db8-9e55-320d750c8227",
+  name: "Budi Santoso",
+  role: "staff",
+  position: "Staff Ahli",
+  ministry: "Kemenhumas",
   user: dummyUserStaff,
+  average_score: 88.33,
+  overall_evaluation:
+    "Kinerja dan dedikasi selama satu semester sangat memuaskan, komunikasi aktif dalam eksekusi program kemenhumas.",
   scores: [
     {
-      aspect_id: "asp_stf_01",
-      aspect_name: "Kedisiplinan & Presensi Agenda",
-      score: 85,
-      notes: "Kehadiran rapat divisi dan kepanitiaan mencapai 95%.",
-    },
-    {
-      aspect_id: "asp_stf_02",
-      aspect_name: "Kualitas Eksekusi Tugas & Deadline",
-      score: 88,
-      notes: "Desain konten feed publikasi selalu selesai sebelum tanggal rilis.",
-    },
-    {
-      aspect_id: "asp_stf_03",
-      aspect_name: "Kolaborasi Tim & Komunikasi",
+      aspect_id: "11111111-1111-1111-1111-111111111101",
+      aspect_name: "Kedisiplinan",
       score: 90,
-      notes: "Kooperatif dan proaktif membantu rekan divisi yang mengalami kendala.",
+      notes: "Kehadiran rapat kementerian dan briefing selalu tepat waktu.",
     },
     {
-      aspect_id: "asp_stf_04",
-      aspect_name: "Inisiatif & Kreativitas Kerja",
-      score: 84,
-      notes: "Memberikan banyak ide visual segar untuk kampanye media sosial.",
+      aspect_id: "11111111-1111-1111-1111-111111111102",
+      aspect_name: "Kerjasama Tim",
+      score: 85,
+      notes: "Sangat kooperatif dan mudah diajak bertukar ide.",
+    },
+    {
+      aspect_id: "11111111-1111-1111-1111-111111111103",
+      aspect_name: "Inisiatif",
+      score: 90,
+      notes: "Proaktif memberikan solusi saat perancangan kampanye publik.",
     },
   ],
-  average_score: 86.75,
-  evaluation:
-    "Kinerja fungsionaris sangat memuaskan, konsisten, dan dapat diandalkan dalam seluruh rangkaian agenda departemen. Memiliki inisiatif tinggi dalam pembuatan materi kreatif dan mampu bekerja di bawah tenggat waktu yang ketat. Diharapkan dapat terus mempertahankan semangat kolaborasi serta mulai melatih anggota staf baru pada periode berikutnya.",
-  created_at: "2025-06-18T14:15:00Z",
-  created_by: "Administrator Pusat",
+  created_at: "2026-10-20T10:00:00Z",
+  updated_at: "2026-10-20T10:00:00Z",
+  created_by: "Admin Pusat",
 };
 
 export const dummyUserEmpty: User = {
-  id: "usr_stf_003",
-  user_id: "usr_stf_003",
-  name: "Rizky Aditya Pratama",
-  nim: "23081010204",
-  email: "rizky.aditya@evalorg.ac.id",
+  id: "f30b3a32-15f1-4db8-9e55-320d750c8229",
+  name: "Siti Rahmawati",
+  email: "staff2@raport.test",
   role: "staff",
-  department: "Departemen Riset & Pengembangan",
-  period: "Semester Genap 2024/2025",
+  position: "Staff Muda",
+  ministry: "Kemenristek",
+  nim: "24081010301",
+  period: "Semester Ganjil 2026/2027",
 };
+
+export const dummyAllAspects: Aspect[] = [
+  {
+    id: "22222222-2222-2222-2222-222222222201",
+    name: "Kepemimpinan Strategis",
+    description: "Visi kepemimpinan dan kapabilitas pengambilan keputusan organisasi",
+    role_type: "bph",
+  },
+  {
+    id: "22222222-2222-2222-2222-222222222202",
+    name: "Koordinasi Antardivisi",
+    description: "Efektivitas sinkronisasi antar-kepala departemen dan tim",
+    role_type: "bph",
+  },
+  {
+    id: "11111111-1111-1111-1111-111111111101",
+    name: "Kedisiplinan",
+    description: "Ketepatan waktu kehadiran dan pelaksanaan tugas",
+    role_type: "both",
+  },
+  {
+    id: "11111111-1111-1111-1111-111111111102",
+    name: "Kerjasama Tim",
+    description: "Kemampuan berkolaborasi dengan sesama fungsionaris",
+    role_type: "both",
+  },
+  {
+    id: "11111111-1111-1111-1111-111111111103",
+    name: "Inisiatif",
+    description: "Proaktif memberikan ide dan solusi dalam menghadapi kendala kerja",
+    role_type: "both",
+  },
+  {
+    id: "22222222-2222-2222-2222-222222222204",
+    name: "Integritas & Akuntabilitas",
+    description: "Kepatuhan terhadap kode etik organisasi dan transparansi LPJ",
+    role_type: "both",
+  },
+];
+
+export const dummyAspectsStaff = dummyAllAspects.filter(
+  (a) => a.role_type === "staff" || a.role_type === "both"
+);
+
+export const dummyAspectsBph = dummyAllAspects.filter(
+  (a) => a.role_type === "bph" || a.role_type === "both"
+);
+
+export const dummyAdminUsersList: User[] = [
+  dummyUserBph,
+  dummyUserStaff,
+  dummyUserEmpty,
+  {
+    id: "a40b3a32-15f1-4db8-9e55-320d750c8230",
+    name: "Ahmad Fauzi",
+    email: "staff3@raport.test",
+    role: "staff",
+    position: "Staff Ahli",
+    ministry: "Kemenkeu",
+    nim: "23081010199",
+  },
+];
+
+export const dummyInitialReports: RaportData[] = [
+  dummyRaportBph,
+  dummyRaportStaff,
+];

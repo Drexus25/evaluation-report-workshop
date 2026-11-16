@@ -26,7 +26,6 @@ export const StepCard: React.FC<StepCardProps> = ({
       className="bg-white flex flex-col justify-between hover:border-primary-300 hover:shadow-md transition-all duration-200 group relative"
     >
       <div>
-        {/* Step Badge & Top Icon */}
         <div className="flex items-center justify-between mb-6">
           <div className="w-11 h-11 rounded-full bg-primary text-white font-headline font-bold text-sm flex items-center justify-center shadow-xs">
             {stepNumber}
