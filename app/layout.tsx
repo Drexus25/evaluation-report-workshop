@@ -1,30 +1,28 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import Navbar from "@/components/ui/Navbar";
+import { ToastProvider } from "@/context/ToastContext";
 
 export const metadata: Metadata = {
-  title: "Report Evaluation",
-  description: "Report Evaluation Workshop ITS",
+  title: "EvalOrg | Sistem Raport Evaluasi Fungsionaris",
+  description: "Platform evaluasi kinerja fungsionaris organisasi mahasiswa berbasis rubrik objektif",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      lang="id"
+      className="h-full antialiased font-sans"
     >
-      <body className="font-sans">
-        {children}
+      <body className="font-sans min-h-full flex flex-col bg-canvas text-neutral-900 selection:bg-primary-100 selection:text-primary-900">
+        <ToastProvider>
+          <Navbar />
+          {children}
+        </ToastProvider>
       </body>
     </html>
   );
