@@ -1,4 +1,5 @@
 import React from "react";
+import { FileText } from "lucide-react";
 import Card, { CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 
 interface RaportEvaluationSectionProps {
@@ -16,19 +17,7 @@ export default function RaportEvaluationSection({
         <CardHeader bordered className="pb-4">
           <div>
             <CardTitle className="text-base sm:text-lg flex items-center gap-2">
-              <svg
-                className="w-5 h-5 text-primary shrink-0"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-              </svg>
+              <FileText className="w-5 h-5 text-primary shrink-0" />
               Evaluasi &amp; Catatan Menyeluruh
             </CardTitle>
             <p className="text-xs text-neutral-500 mt-0.5">

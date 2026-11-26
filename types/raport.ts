@@ -34,7 +34,7 @@ export interface AuthLoginData {
   user: User;
 }
 
-export type AspectRoleType = "bph" | "staff" | "both";
+export type AspectRoleType = "bph" | "staff";
 
 export interface Aspect {
   id: string;
@@ -49,12 +49,13 @@ export interface AspectScoreItem {
   aspect_id: string;
   aspect_name?: string;
   score: number;
+  feedback?: string;
   notes?: string;
 }
 
 export type AspectScore = AspectScoreItem;
 
-export interface RaportData {
+export interface ReportListItem {
   id: string;
   user_id: string;
   name?: string;
@@ -63,11 +64,16 @@ export interface RaportData {
   ministry?: string;
   user?: User;
   average_score: number;
-  overall_evaluation: string;
-  scores: AspectScoreItem[];
+  overall_evaluation?: string;
+  scores?: AspectScoreItem[];
   created_at: string;
   updated_at?: string;
   created_by?: string;
+}
+
+export interface RaportData extends ReportListItem {
+  overall_evaluation: string;
+  scores: AspectScoreItem[];
 }
 
 export interface CreateReportPayload {
@@ -76,5 +82,21 @@ export interface CreateReportPayload {
   scores: Array<{
     aspect_id: string;
     score: number;
+    feedback?: string;
   }>;
+}
+
+export interface UpdateReportPayload {
+  overall_evaluation: string;
+  scores: Array<{
+    aspect_id: string;
+    score: number;
+    feedback?: string;
+  }>;
+}
+
+export interface AspectPayload {
+  name: string;
+  description?: string;
+  role_type: AspectRoleType;
 }

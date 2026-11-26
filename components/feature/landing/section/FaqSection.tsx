@@ -1,17 +1,11 @@
 import React from "react";
 import FaqItem from "../component/FaqItem";
-import RoleBadge from "@/components/ui/RoleBadge";
 
 export const FaqSection: React.FC = () => {
   return (
-    <section className="py-16 lg:py-24 bg-white">
+    <section id="faq" className="py-16 lg:py-24 bg-white scroll-mt-24">
       <div className="layout-container max-w-4xl space-y-10">
         <div className="text-center space-y-3">
-          <div className="inline-flex items-center justify-center">
-            <RoleBadge variant="bph" size="sm" className="tracking-wider uppercase">
-              Bantuan &amp; FAQ
-            </RoleBadge>
-          </div>
           <h2 className="font-headline text-2xl sm:text-3xl md:text-4xl font-bold text-neutral-900 tracking-tight">
             Pertanyaan Fungsionaris
           </h2>
@@ -31,8 +25,8 @@ export const FaqSection: React.FC = () => {
           />
 
           <FaqItem
-            question="Apakah transkrip PDF resmi ini dapat dilampirkan sebagai SKPI?"
-            answer="Ya. Transkrip hasil generate dari platform EvalOrg telah dilengkapi dengan barcode verifikasi digital, stempel organisasi terdaftar, serta rekapitulasi penilaian baku yang diakui untuk kelengkapan berkas portofolio, beasiswa, maupun lampiran SKPI."
+            question="Apakah transkrip raport digital ini dapat dicetak untuk arsip organisasi?"
+            answer="Ya. Raport evaluasi digital dari platform EvalOrg menyajikan rekapitulasi skor per kriteria dan catatan evaluasi kualitatif dalam format siap cetak, sehingga mudah dilampirkan untuk arsip sidang LPJ maupun portofolio internal organisasi."
             defaultOpen={false}
           />
         </div>

@@ -1,6 +1,8 @@
 "use client";
 
 import React, { forwardRef, useState, useId } from "react";
+import { AlertCircle } from "lucide-react";
+import { cn } from "@/libs/cn";
 
 export interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -24,7 +26,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       rows = 4,
       disabled = false,
       required = false,
-      className = "",
+      className,
       id,
       value,
       defaultValue,
@@ -74,15 +76,13 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         )}
 
         <div
-          className={`relative flex flex-col w-full rounded-xl bg-neutral-100 border transition-all duration-200 ${
+          className={cn(
+            "relative flex flex-col w-full rounded-xl bg-neutral-100 border transition-all duration-150",
             isError
               ? "border-status-destructive ring-1 ring-status-destructive/20 bg-status-destructive-bg/10"
-              : "border-transparent focus-within:border-primary focus-within:bg-surface focus-within:ring-2 focus-within:ring-primary/15"
-          } ${
-            disabled
-              ? "opacity-60 cursor-not-allowed select-none bg-neutral-200/50"
-              : ""
-          }`}
+              : "border-transparent focus-within:border-primary focus-within:bg-surface focus-within:ring-2 focus-within:ring-primary/15",
+            disabled && "opacity-60 cursor-not-allowed select-none bg-neutral-200/50"
+          )}
         >
           <textarea
             ref={ref}
@@ -102,7 +102,10 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                 ? `${textareaId}-helper`
                 : undefined
             }
-            className={`w-full bg-transparent py-3 px-4 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none resize-y min-h-24 ${className}`}
+            className={cn(
+              "w-full bg-transparent py-3 px-4 text-sm text-neutral-900 placeholder:text-neutral-500 focus:outline-none resize-y min-h-24",
+              className
+            )}
             {...props}
           />
         </div>
@@ -114,17 +117,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                 id={`${textareaId}-error`}
                 className="text-xs text-status-destructive font-medium flex items-center gap-1"
               >
-                <svg
-                  className="w-3.5 h-3.5 shrink-0"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                <AlertCircle className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
                 <span>{error}</span>
               </p>
             )}
@@ -137,7 +130,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           </div>
 
           {showCount && maxLength && (
-            <div className="text-[11px] text-neutral-400 font-medium shrink-0">
+            <div className="text-[11px] text-neutral-500 font-medium shrink-0">
               {charCount}/{maxLength}
             </div>
           )}

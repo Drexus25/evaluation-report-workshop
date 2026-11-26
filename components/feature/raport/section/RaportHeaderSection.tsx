@@ -33,7 +33,7 @@ export default function RaportHeaderSection({
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-start sm:items-center gap-4">
             <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-primary-50 border border-primary-200/60 text-primary flex items-center justify-center shrink-0 font-headline font-bold text-xl sm:text-2xl">
-              {user.name
+              {(user?.name || "User")
                 .split(" ")
                 .slice(0, 2)
                 .map((n) => n[0])
@@ -43,10 +43,10 @@ export default function RaportHeaderSection({
             <div className="space-y-1">
               <div className="flex flex-wrap items-center gap-2">
                 <h1 className="font-headline text-xl sm:text-2xl font-bold text-neutral-900 tracking-tight">
-                  {user.name}
+                  {user?.name || "Fungsionaris"}
                 </h1>
-                <RoleBadge variant={user.role === "bph" ? "bph" : "staff"} size="sm">
-                  {user.role === "bph" ? "BPH" : "Staff"}
+                <RoleBadge variant={user?.role === "bph" ? "bph" : "staff"} size="sm">
+                  {user?.role === "bph" ? "BPH" : "Staff"}
                 </RoleBadge>
                 {hasRaport ? (
                   <RoleBadge variant="verified" size="sm">
@@ -67,7 +67,7 @@ export default function RaportHeaderSection({
                 {user.nim && (
                   <>
                     <span>
-                      NIM: <strong className="font-semibold text-neutral-700">{user.nim}</strong>
+                      NIM: <strong className="font-semibold text-neutral-700 tabular-nums">{user.nim}</strong>
                     </span>
                     <span className="hidden sm:inline">•</span>
                   </>

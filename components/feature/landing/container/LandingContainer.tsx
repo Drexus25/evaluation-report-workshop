@@ -8,7 +8,7 @@ import FooterSection from "../section/FooterSection";
 
 export const LandingContainer: React.FC = () => {
   return (
-    <div className="min-h-screen bg-canvas flex flex-col selection:bg-primary-100 selection:text-primary-900 pt-20">
+    <div className="min-h-[100dvh] bg-canvas flex flex-col selection:bg-primary-100 selection:text-primary-900 pt-20">
       <main className="flex-1">
         <HeroSection />
         <FeaturesSection /> 

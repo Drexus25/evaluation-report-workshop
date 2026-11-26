@@ -1,5 +1,6 @@
 import React from "react";
-import Button from "@/components/ui/Button";
+import Link from "next/link";
+import { ClipboardCheck, Lock } from "lucide-react";
 import RoleBadge from "@/components/ui/RoleBadge";
 import Card from "@/components/ui/Card";
 import StatCounterItem from "../component/StatCounterItem";
@@ -8,14 +9,12 @@ import DashboardMockup from "../component/DashboardMockup";
 export const HeroSection: React.FC = () => {
   return (
     <section className="relative pt-8 pb-16 lg:pt-14 lg:pb-24 overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-linear-to-b from-primary-100/40 via-primary-50/20 to-transparent blur-3xl -z-10 pointer-events-none" />
-
       <div className="layout-container text-center space-y-8">
         <div className="inline-flex items-center justify-center">
           <RoleBadge
             variant="verified"
             size="md"
-            className=" hover:opacity-90 font-semibold shadow-xs"
+            className="hover:opacity-90 font-semibold shadow-xs tabular-nums"
           >
             SIKLUS EVALUASI SEMESTER GENAP 2024/2025
           </RoleBadge>
@@ -36,31 +35,21 @@ export const HeroSection: React.FC = () => {
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-          <Button
-            variant="primary"
-            size="md"
-            className="rounded-full shadow-md hover:shadow-lg hover:shadow-primary/20"
-            leftIcon={
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-              </svg>
-            }
+          <Link
+            href="/login"
+            className="inline-flex items-center justify-center rounded-full h-11 px-6 text-sm gap-2 font-semibold transition-all duration-150 ease-out select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary active:scale-[0.98] bg-primary text-surface hover:bg-primary-700 active:bg-primary-800 shadow-md hover:shadow-lg hover:shadow-primary/20"
           >
-            Akses Raport Saya
-          </Button>
+            <Lock className="w-4 h-4 shrink-0" aria-hidden="true" />
+            <span>Akses Raport Saya</span>
+          </Link>
 
-          <Button
-            variant="outline"
-            size="md"
-            className="rounded-full bg-white hover:bg-neutral-50 border-neutral-300 text-neutral-800! font-semibold"
-            leftIcon={
-              <svg className="w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-              </svg>
-            }
+          <a
+            href="#alur-penilaian"
+            className="inline-flex items-center justify-center rounded-full h-11 px-6 text-sm gap-2 font-semibold transition-all duration-150 ease-out select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary active:scale-[0.98] bg-white hover:bg-neutral-50 border-2 border-neutral-300 text-neutral-800"
           >
-            Lihat Alur Penilaian
-          </Button>
+            <ClipboardCheck className="w-4 h-4 text-neutral-500 shrink-0" aria-hidden="true" />
+            <span>Lihat Alur Penilaian</span>
+          </a>
         </div>
 
         <div className="pt-6 pb-4 w-full max-w-4xl mx-auto">
@@ -85,9 +74,9 @@ export const HeroSection: React.FC = () => {
               sublabel="Proteksi Atomik"
             />
             <StatCounterItem
-              value="PDF Instan"
-              label="Siap Cetak Sidang Pleno"
-              sublabel="Tanda Tangan Digital"
+              value="Role-Based"
+              label="Hak Akses Terstruktur"
+              sublabel="Akses Admin, BPH & Staff"
             />
           </Card>
         </div>

@@ -1,9 +1,9 @@
 import React from "react";
-import { AspectScore } from "@/types";
+import { AspectScoreItem } from "@/types";
 import Card, { CardHeader, CardTitle, CardContent } from "@/components/ui/Card";
 
 interface RaportScoreSectionProps {
-  scores: AspectScore[];
+  scores: AspectScoreItem[];
   averageScore: number;
 }
 
@@ -12,13 +12,14 @@ export default function RaportScoreSection({
   averageScore,
 }: RaportScoreSectionProps) {
   const getGradePredicate = (avg: number) => {
-    if (avg >= 90) return { label: "Sangat Baik (A)", tone: "text-status-success", bg: "bg-status-success-bg" };
+    if (avg >= 90) return { label: "Sangat Baik (A)", tone: "text-status-success-text", bg: "bg-status-success-bg" };
     if (avg >= 80) return { label: "Baik (B)", tone: "text-primary", bg: "bg-primary-50" };
     if (avg >= 70) return { label: "Cukup (C)", tone: "text-status-warning-text", bg: "bg-status-warning-bg" };
-    return { label: "Perlu Evaluasi (D)", tone: "text-status-destructive", bg: "bg-status-destructive-bg" };
+    return { label: "Perlu Evaluasi (D)", tone: "text-status-destructive-text", bg: "bg-status-destructive-bg" };
   };
 
-  const predicate = getGradePredicate(averageScore);
+  const numAvg = typeof averageScore === "number" ? averageScore : Number(averageScore) || 0;
+  const predicate = getGradePredicate(numAvg);
 
   return (
     <section className="space-y-6">
@@ -28,10 +29,10 @@ export default function RaportScoreSection({
             Nilai Rata-Rata Akhir
           </p>
           <div className="flex items-baseline gap-2">
-            <span className="font-headline text-3xl sm:text-4xl font-bold text-neutral-900">
-              {averageScore.toFixed(2)}
+            <span className="font-headline text-3xl sm:text-4xl font-bold text-neutral-900 tabular-nums">
+              {numAvg.toFixed(2)}
             </span>
-            <span className="text-sm text-neutral-400 font-medium">/ 100</span>
+            <span className="text-sm text-neutral-600 font-medium tabular-nums">/ 100</span>
           </div>
           <p className="text-xs text-neutral-500 mt-2">
             Formula rata-rata tanpa bobot dari backend
@@ -59,7 +60,7 @@ export default function RaportScoreSection({
             Cakupan Penilaian
           </p>
           <div className="flex items-baseline gap-2">
-            <span className="font-headline text-3xl sm:text-4xl font-bold text-neutral-900">
+            <span className="font-headline text-3xl sm:text-4xl font-bold text-neutral-900 tabular-nums">
               {scores.length}
             </span>
             <span className="text-sm text-neutral-600 font-medium">
@@ -86,39 +87,40 @@ export default function RaportScoreSection({
 
         <CardContent className="p-0 space-y-0 divide-y divide-neutral-200">
           {scores.map((item, index) => {
+            const noteText = item.feedback || item.notes;
             return (
               <div
                 key={item.aspect_id}
-                className="p-5 sm:p-6 hover:bg-neutral-50/70 transition-colors"
+                className="p-5 sm:p-6 hover:bg-neutral-50/70 transition-colors duration-150 ease-out"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-2">
                   <div className="flex items-center gap-3">
-                    <span className="w-6 h-6 rounded-md bg-neutral-100 text-neutral-600 text-xs font-bold flex items-center justify-center shrink-0">
+                    <span className="w-6 h-6 rounded-md bg-neutral-100 text-neutral-600 text-xs font-bold flex items-center justify-center shrink-0 tabular-nums">
                       {index + 1}
                     </span>
                     <h3 className="font-headline text-sm sm:text-base font-semibold text-neutral-900">
-                      {item.aspect_name}
+                      {item.aspect_name || `Aspek ${index + 1}`}
                     </h3>
                   </div>
 
                   <div className="flex items-baseline gap-1 shrink-0 self-end sm:self-auto">
-                    <span className="text-xl sm:text-2xl font-bold font-headline text-primary">
+                    <span className="text-xl sm:text-2xl font-bold font-headline text-primary tabular-nums">
                       {item.score}
                     </span>
-                    <span className="text-xs text-neutral-400 font-medium">/ 100</span>
+                    <span className="text-xs text-neutral-600 font-medium tabular-nums">/ 100</span>
                   </div>
                 </div>
 
                 <div className="w-full bg-neutral-100 rounded-full h-2 overflow-hidden mb-2">
                   <div
-                    className="bg-primary h-2 rounded-full transition-all duration-300"
+                    className="bg-primary h-2 rounded-full transition-all duration-200 ease-out"
                     style={{ width: `${Math.min(Math.max(item.score, 0), 100)}%` }}
                   />
                 </div>
 
-                {item.notes && (
-                  <p className="text-xs text-neutral-500 leading-relaxed pl-9">
-                    <span className="font-medium text-neutral-700">Catatan:</span> {item.notes}
+                {noteText && (
+                  <p className="text-xs text-neutral-600 leading-relaxed pl-9">
+                    <span className="font-medium text-neutral-700">Catatan:</span> {noteText}
                   </p>
                 )}
               </div>
