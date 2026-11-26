@@ -23,20 +23,20 @@ export const StepCard: React.FC<StepCardProps> = ({
     <Card
       variant="default"
       padding="md"
-      className="bg-white flex flex-col justify-between hover:border-primary-300 hover:shadow-md transition-all duration-200 group relative"
+      className="bg-white flex flex-col justify-between hover:border-primary-300 hover:shadow-md transition-all duration-200 ease-out group relative"
     >
       <div>
         <div className="flex items-center justify-between mb-6">
-          <div className="w-11 h-11 rounded-full bg-primary text-white font-headline font-bold text-sm flex items-center justify-center shadow-xs">
+          <div className="w-11 h-11 rounded-full bg-primary text-white font-headline font-bold text-sm flex items-center justify-center shadow-xs tabular-nums">
             {stepNumber}
           </div>
-          <div className="w-9 h-9 rounded-xl bg-neutral-100/80 text-neutral-500 flex items-center justify-center group-hover:text-primary transition-colors">
+          <div className="w-9 h-9 rounded-xl bg-neutral-100/80 text-neutral-500 flex items-center justify-center group-hover:text-primary transition-colors duration-150 ease-out">
             {icon}
           </div>
         </div>
 
         <CardHeader className="p-0 pb-2 flex-col items-start gap-1">
-          <CardTitle as="h3" className="text-base font-bold text-neutral-900 group-hover:text-primary transition-colors">
+          <CardTitle as="h3" className="text-base font-bold text-neutral-900 group-hover:text-primary transition-colors duration-150 ease-out">
             {title}
           </CardTitle>
         </CardHeader>

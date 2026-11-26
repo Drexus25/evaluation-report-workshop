@@ -12,14 +12,14 @@ export const FooterSection: React.FC = () => {
             EvalOrg
           </span>
           <span className="text-neutral-300 hidden sm:inline">|</span>
-          <span className="text-neutral-500 text-[11px] sm:text-xs">
-            © 2024–2025 Platform Evaluasi Kinerja &amp; Transkrip Fungsionaris Organisasi.
+          <span className="text-neutral-500 text-[11px] sm:text-xs tabular-nums">
+            © 2024-2025 Platform Evaluasi Kinerja &amp; Transkrip Fungsionaris Organisasi.
           </span>
         </div>
 
-        <div className="text-[10px] sm:text-[11px] font-mono tracking-wider font-semibold text-neutral-400 uppercase">
-          Transparansi, Akurasi &amp; Akuntabilitas Mahasiswa
-        </div>
+        <p className="text-xs font-medium text-neutral-600">
+          Transparansi, akurasi &amp; akuntabilitas mahasiswa
+        </p>
       </div>
     </footer>
   );

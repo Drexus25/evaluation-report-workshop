@@ -7,8 +7,8 @@ export const aspectSchema = z.object({
     .min(1, "Nama aspek wajib diisi")
     .max(100, "Nama aspek maksimal 100 karakter"),
   description: z.string().trim().optional(),
-  role_type: z.enum(["bph", "staff", "both"], {
-    error: "Pilih target role yang valid (BPH, Staff, atau Keduanya)",
+  role_type: z.enum(["bph", "staff"], {
+    error: "Pilih target role yang valid (BPH atau Staff)",
   }),
 });
 

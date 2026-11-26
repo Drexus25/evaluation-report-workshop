@@ -1,6 +1,6 @@
 # EvalOrg — Sistem Raport Evaluasi Fungsionaris Organisasi
-> **Tugas 3 Workshop — Frontend Developer**  
-> Implementasi logika form, halaman raport, navigasi admin, dan validasi data dummy sesuai kontrak Backend API.
+> **Tugas 4 Workshop — Frontend Developer**  
+> Integrasi REST API Backend, Axios Instance & Interceptors, Custom Hooks, Proteksi Sesi Pengguna, Error Handling & Feedback, serta Validasi Build Bersih.
 
 ---
 
@@ -9,90 +9,144 @@
 | Route | Pengguna / Akses | Deskripsi & Fungsi |
 |---|---|---|
 | `/` | Public Visitor | Landing page interaktif pengenalan platform dan alur evaluasi |
-| `/login` | Public / Mahasiswa | Halaman masuk akun fungsionaris & administrator |
-| `/raport` | Fungsionaris (`bph` / `staff`) | Raport pribadi menampilkan nilai per aspek, rata-rata (2 desimal), dan evaluasi naratif |
-| `/admin` | Admin | Dashboard ringkasan status evaluasi fungsionaris & metrik organisasi |
-| `/admin/aspek` | Admin | Form & daftar manajemen aspek penilaian (CRUD lokal + proteksi aspek terkunci) |
-| `/admin/raport` | Admin | Tabel rekap seluruh raport terbit & Modal Panel detail raport fungsionaris |
-| `/admin/raport/create` | Admin | Form input raport baru berbasis React Hook Form + Zod dinamis per role |
+| `/login` | Public / Mahasiswa | Halaman masuk akun fungsionaris & administrator (dilengkapi fitur *Quick Fill* akun uji) |
+| `/raport` | Fungsionaris (`bph` / `staff`) | Raport pribadi via `GET /api/v1/me/report`, membedakan status 200 OK, 404 Belum Terbit, dan Network Error |
+| `/admin` | Admin Only | Dashboard rekapitulasi performa organisasi dan metrik evaluasi |
+| `/admin/aspek` | Admin Only | Manajemen master aspek penilaian (CRUD `GET/POST/PUT/DELETE /api/v1/admin/aspects`) |
+| `/admin/raport` | Admin Only | Tabel rekap seluruh raport terbit & Modal Panel detail raport fungsionaris (`GET/DELETE /api/v1/admin/reports`) |
+| `/admin/raport/create` | Admin Only | Form input raport baru dinamis per role, real-time preview rata-rata, proteksi duplikasi 409 |
 
 ---
 
-## 👥 Data Akun Dummy & Fixture Pengujian
+## 🏗️ 1. Arsitektur Axios & Integrasi API
 
-Seluruh akun dummy pengujian menggunakan password standar: `password123`.
+Seluruh komunikasi HTTP ke backend dikonfigurasikan secara terpusat melalui Axios instance di `libs/axios.ts` dan service API di `libs/api.ts`:
 
-### 1. Akun Pengguna (`data/dummyRaport.ts`)
-* **Administrator:** `admin@raport.test` (Role: `admin`)
-* **Fungsionaris BPH:** `bph1@raport.test` (Nama: **Bima Arya Pratama** — Ketua BPH)
-* **Fungsionaris Staff (Raport Tersedia / 200 OK):** `staff1@raport.test` (Nama: **Budi Santoso** — Staff Ahli, Kemenhumas, UUID: `e20b3a32-15f1-4db8-9e55-320d750c8227`)
-* **Fungsionaris Staff (Raport Belum Ada / Empty State 404):** `staff2@raport.test` (Nama: **Siti Rahmawati** — Staff Muda, Kemenristek)
-
-### 2. Master Aspek Penilaian
-* **Aspek BPH:** Kepemimpinan Strategis, Koordinasi & Tata Kelola, Manajemen Krisis & Pengambilan Keputusan, Integritas & Akuntabilitas.
-* **Aspek Staff:** Kedisiplinan, Kerjasama Tim, Inisiatif.
-
----
-
-## 🧪 Panduan Cara Mencoba Validasi & Skenario Form
-
-### 1. Form Input Raport (`/admin/raport/create`)
-1. **Dinamis Sesuai Role:**
-   * Pilih akun **Bima Arya (BPH)**: form otomatis menampilkan 4 aspek khusus BPH.
-   * Ganti ke akun **Siti Rahmawati (Staff)**: form otomatis mereset nilai sebelumnya dan hanya menampilkan 3 aspek khusus Staff.
-2. **Validasi Angka 0–100 (Tidak Auto-0 saat Kosong):**
-   * Kosongkan salah satu input nilai lalu klik *"Simpan & Terbitkan Raport"*. Sistem akan menampilkan pesan error validasi *"Nilai harus berupa angka 0–100"*.
-   * Masukkan nilai negatif (contoh `-5`) atau lebih dari 100 (contoh `120`) untuk melihat pesan batas min/max.
-   * Nilai `0` sah dan diterima jika diketik manual.
-3. **Validasi Evaluasi Menyeluruh:**
-   * Kosongkan kolom evaluasi atau hanya isi spasi, sistem akan menampilkan error *"Evaluasi menyeluruh tidak boleh kosong"*.
-4. **Indikator Realtime Preview Rata-Rata:**
-   * Setiap kali nilai aspek diisi, badge **`[Preview Rata-Rata]`** di header form akan menghitung formula rata-rata tanpa bobot secara langsung dengan presisi 2 angka desimal.
-5. **Simulasi Error Duplikat (HTTP 409 Conflict):**
-   * Pilih akun **Budi Santoso** (yang sudah memiliki raport awal), lalu submit. Sistem menampilkan alert peringatan penolakan duplikasi sesuai aturan MVP backend.
-6. **Simulasi Sukses (HTTP 201 Created):**
-   * Pilih akun **Siti Rahmawati** atau **Ahmad Fauzi** (fungsionaris yang belum dinilai), isi seluruh aspek dan evaluasi, lalu klik submit. Sistem akan menampilkan notifikasi sukses lengkap dengan preview JSON payload yang siap dikirim ke backend.
-
-### 2. Form Kelola Aspek (`/admin/aspek`)
-1. **Tambah Aspek Baru:**
-   * Klik `+ Tambah Aspek Baru`, isi nama dan pilih role target (BPH/Staff). Aspek baru akan langsung muncul di tabel.
-2. **Ubah Aspek:**
-   * Klik tombol `Ubah` pada aspek buatan untuk mengubah nama atau deskripsi.
-3. **Simulasi Proteksi Aspek Terpakai (HTTP 400 Bad Request):**
-   * Coba klik tombol `Hapus` pada aspek **Kedisiplinan** atau **Kerjasama Tim**.
-   * Konfirmasi hapus, maka sistem menampilkan pesan error pencegahan karena aspek telah terikat pada raport fungsionaris aktif.
-
-### 3. Halaman Raport Pribadi (`/raport`)
-* Gunakan pengalih akun di pojok kanan header:
-  * **Budi Santoso:** Menampilkan transkrip raport lengkap dengan predikat dan ulasan kualitatif.
-  * **Bima Arya:** Menampilkan transkrip raport versi BPH dengan aspek kepemimpinan.
-  * **Siti Rahmawati:** Menampilkan **Empty State** resmi saat raport belum diterbitkan oleh Admin.
+* **Base URL & Environment:**
+  * Menggunakan variabel lingkungan `NEXT_PUBLIC_API_URL` (default: `https://api-ws.bemfilkomub.cloud/api/v1`).
+  * Header pengaman `X-API-Key` diambil dari `NEXT_PUBLIC_API_KEY`.
+* **Request Interceptor:**
+  * Secara otomatis membaca token dari `authStorage.getToken()`.
+  * Menyisipkan header `Authorization: Bearer <token>` dan `X-API-Key` pada setiap request keluar.
+* **Response Interceptor & Error Normalization:**
+  * Mengembalikan respons sukses terstandardisasi.
+  * Menangani status **401 Unauthorized**: secara otomatis membersihkan sesi lokal (`authStorage.clearSession()`) dan memancarkan event `evalorg:session-expired` untuk mengarahkan pengguna ke `/login?expired=1`.
+  * Membedakan **Network Error** (koneksi server terputus/gagal) agar tidak disalahartikan sebagai data kosong.
+  * Mengklasifikasikan error status 400 (validasi), 403 (akses ditolak), 404 (tidak ditemukan), dan 409 (konflik/duplikasi) ke instance `ApiError`.
 
 ---
 
-## ⚙️ Bagian yang Menggunakan Data Dummy vs Kesiapan Integrasi (Tugas 4)
+## 🪝 2. Custom Hooks & Manajemen Sesi
 
-* **Status Saat Ini (Tugas 3):**
-  * Seluruh manipulasi data (CRUD aspek, pembuatan raport, pembacaan raport, status empty state) berjalan melalui state lokal dan data dummy di `data/dummyRaport.ts`.
-  * Types dan Schema Zod di `types/raport.ts` dan `schemas/` telah disesuaikan 100% dengan format envelope backend (`ApiResponse<T>`, `ApiErrorResponse`).
-* **Kesiapan Integrasi Tugas 4:**
-  * File service API terpusat telah disiapkan di `libs/api.ts` (`authApi`, `reportApi`, `adminApi`) lengkap dengan header `Authorization: Bearer <TOKEN>`, `x-api-key`, dan penanganan error status HTTP (200, 201, 400, 401, 403, 404, 409).
-  * Helper sesi JWT telah disiapkan di `libs/auth.ts` dan hook `hooks/useAuth.ts`.
+Seluruh pemanggilan data dan business logic dipisahkan ke dalam direktori `hooks/`:
+
+1. **`useAuth` (`hooks/useAuth.ts`):**
+   * Mengelola state autentikasi (`user`, `token`, `isAuthenticated`, `isAdmin`).
+   * Fungsi `login`: mengirim kredensial ke `POST /api/v1/auth/login`, menyinkronkan profil via `GET /api/v1/me`, dan mengembalikan role untuk navigasi.
+   * Fungsi `logout`: memanggil `POST /api/v1/auth/logout`, membersihkan `authStorage` (localStorage & sessionStorage), dan mencegah data akun sebelumnya tertinggal saat berganti akun.
+   * Guard Navigasi: Rute `/admin/*` diproteksi oleh `AdminGuard` (pengguna non-admin dialihkan ke `/raport` dengan notifikasi 403). Rute `/raport` diproteksi oleh `AuthOnlyGuard`.
+2. **`useAspects` (`hooks/useAspects.ts`):**
+   * Mengelola state aspek penilaian, filter role (`all`, `bph`, `staff`), loading, dan mutasi.
+   * `createAspect`: `POST /api/v1/admin/aspects`.
+   * `updateAspect`: `PUT /api/v1/admin/aspects/:id`.
+   * `deleteAspect`: `DELETE /api/v1/admin/aspects/:id` dengan dialog konfirmasi sebelum hapus.
+   * Memperbarui tampilan secara otomatis setelah mutasi agar data selalu mutakhir.
+3. **`useAdminReports` (`hooks/useAdminReports.ts`):**
+   * Mengambil daftar raport (`GET /api/v1/admin/reports`) dan detail raport (`GET /api/v1/admin/reports/:id`).
+   * Mengambil data fungsionaris (`GET /api/v1/admin/users`) dan aspek untuk form pembuatan raport.
+   * Menggunakan nilai **`average_score` dari respons Backend sebagai nilai final** tanpa menghitung ulang dengan rumus berbeda.
+   * `deleteReport`: `DELETE /api/v1/admin/reports/:id` dengan modal konfirmasi.
+4. **`usePersonalReport` (`hooks/usePersonalReport.ts`):**
+   * Mengambil profil fungsionaris aktif (`GET /api/v1/me`) dan raport pribadi (`GET /api/v1/me/report`).
+   * **Pembedaan tegas 404 vs Error Jaringan:**
+     * Status **404**: Menampilkan *Empty State resmi* ("Raport Belum Diterbitkan").
+     * Status **Network Error / 500**: Menampilkan *Error Card* dengan tombol "Coba Muat Ulang" (tidak ditampilkan seolah-olah data kosong).
+5. **`useToast` (`context/ToastContext.tsx`):**
+   * Sistem notifikasi global (Success, Error, Warning, Info) berbasis **Framer Motion**.
+   * Mendukung preferensi aksesibilitas `useReducedMotion()`.
 
 ---
 
-## 🚀 Menjalankan Project Secara Lokal
+## 🎨 3. Loading, Feedback & Error Handling
 
-```bash
-# 1. Install dependencies (jika belum)
-npm install
+* **Submit Prevention:** Tombol submit pada seluruh formulir otomatis berada pada status `disabled` saat `isSubmitting` atau `isLoading` aktif dengan indikator animasi spinner untuk mencegah *duplicate submissions*.
+* **Penanganan Duplikat (HTTP 409):** Ketika admin menginput raport untuk fungsionaris yang sudah memiliki raport, sistem menampilkan banner peringatan 409 tanpa menghapus nilai dan evaluasi yang telah diketik pengguna.
+* **Validasi Error Backend:** Error validasi dari backend dipetakan langsung ke elemen form bersangkutan.
+* **Animasi Transisi:** Modal, toast, dan card menggunakan transisi halus Framer Motion dengan dukungan penuh untuk `prefers-reduced-motion`.
 
-# 2. Jalankan server pengembangan
-npm run dev
+---
 
-# 3. Jalankan pengecekan TypeScript & Linter
-npx tsc --noEmit
-npm run lint
+## 👥 Akun Uji Coba (Kredensial Demo)
+
+Tersedia tombol pintas (*Quick Fill*) pada halaman `/login` untuk memudahkan penguji:
+
+* **Administrator:** `admin@raport.com` / `admin@raport.test` (Role: `admin`, Password: `password123`)
+* **Fungsionaris BPH:** `bph1@raport.test` (Nama: **Bima Arya Pratama**, Password: `password123`)
+* **Fungsionaris Staff (Raport Tersedia 200 OK):** `staff1@raport.test` (Nama: **Budi Santoso**, Password: `password123`)
+* **Fungsionaris Staff (Raport Belum Ada 404):** `staff2@raport.test` (Nama: **Siti Rahmawati**, Password: `password123`)
+
+---
+
+## ⚙️ Variabel Lingkungan (.env)
+
+Buat file `.env` di direktori utama berdasarkan template `.env.example`:
+
+```env
+# URL Base Endpoint Backend API
+NEXT_PUBLIC_API_URL=https://api-ws.bemfilkomub.cloud/api/v1
+
+# Header Pengaman X-API-Key
+NEXT_PUBLIC_API_KEY=<API_KEY>
 ```
 
-Buka [http://localhost:3000](http://localhost:3000) di browser untuk melihat hasilnya.
+> **Catatan Keamanan:** File `.env` telah didaftarkan pada `.gitignore` sehingga rahasia dan kunci otentikasi tidak akan terunggah ke repositori publik.
+
+---
+
+## 🚀 Panduan Menjalankan Frontend Secara Lokal
+
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Siapkan file konfigurasi environment
+cp .env.example .env
+
+# 3. Jalankan server pengembangan
+npm run dev
+
+# 4. Jalankan pengecekan TypeScript & Linter
+npx tsc --noEmit
+npm run lint
+
+# 5. Jalankan build produksi
+npm run build
+```
+
+Buka [http://localhost:3000](http://localhost:3000) di peramban web Anda.
+
+---
+
+## 📋 Skenario Alur Presentasi Final (Durasi ±5 Menit)
+
+1. **Alur 1 — Admin Login & Kelola Aspek:**
+   * Buka `/login` → Klik tombol cepat `Admin` → Klik *"Masuk ke Akun"*.
+   * Sistem otomatis mengarahkan ke dashboard admin `/admin`.
+   * Buka menu *"Kelola Aspek"* (`/admin/aspek`) → Tambah aspek baru → Coba ubah deskripsi → Tampilkan dialog konfirmasi hapus.
+2. **Alur 2 — Input Raport & Validasi Nilai:**
+   * Buka menu *"Input Raport Baru"* (`/admin/raport/create`).
+   * Pilih fungsionaris → Aspek akan tampil secara dinamis sesuai role target.
+   * Masukkan nilai aspek → Amati badge realtime `[Preview Rata-Rata]`.
+   * Coba submit pada fungsionaris yang sudah memiliki raport → Amati penanganan error 409 (input tidak terhapus).
+   * Submit fungsionaris yang belum dinilai → Muncul notifikasi sukses HTTP 201.
+3. **Alur 3 — Rekap & Detail Raport:**
+   * Buka menu *"Daftar Raport"* (`/admin/raport`) → Filter role BPH/Staff dan gunakan pencarian.
+   * Klik *"Lihat Detail"* → Muncul modal pop-up menampilkan transkrip lengkap dengan nilai `average_score` asli dari backend.
+4. **Alur 4 — Fungsionaris Login & Raport Pribadi:**
+   * Lakukan logout dari akun admin via sidebar atau navbar.
+   * Login menggunakan akun Staff / BPH → Diarahkan langsung ke `/raport`.
+   * Lihat transkrip resmi beserta predikat kinerja dan evaluasi naratif.
+   * Uji akun belum dinilai (Empty State 404) vs simulasi error jaringan.
+5. **Alur 5 — Sesi Berakhir & Proteksi Rute:**
+   * Coba akses langsung rute `/admin` menggunakan akun non-admin → Muncul pesan 403 Forbidden dan diarahkan ke rute aman.
+   * Logout akun → Sesi dibersihkan total tanpa data akun tertinggal.

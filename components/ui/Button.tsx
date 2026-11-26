@@ -1,4 +1,6 @@
 import React, { forwardRef } from "react";
+import { Loader2 } from "lucide-react";
+import { cn } from "@/libs/cn";
 
 export type ButtonVariant = "primary" | "secondary" | "outline" | "ghost";
 export type ButtonSize = "sm" | "md" | "lg";
@@ -12,15 +14,18 @@ export interface ButtonProps
   rightIcon?: React.ReactNode;
 }
 
+const baseButtonClasses =
+  "inline-flex items-center justify-center rounded-full font-semibold transition-all duration-150 ease-out select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none disabled:active:scale-100";
+
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
     "bg-primary text-surface hover:bg-primary-700 active:bg-primary-800 focus-visible:ring-primary shadow-sm",
   secondary:
-    "bg-surface text-primary hover:bg-neutral-100 active:bg-neutral-200 focus-visible:ring-surface shadow-sm border border-neutral-200/50",
+    "bg-surface text-primary hover:bg-neutral-100 active:bg-neutral-200 focus-visible:ring-primary shadow-sm border border-neutral-200/50",
   outline:
     "bg-transparent text-primary border-2 border-primary hover:bg-primary/10 active:bg-primary/20 focus-visible:ring-primary",
   ghost:
-    "bg-neutral-400 text-primary-900 hover:bg-neutral-500 active:bg-neutral-600 focus-visible:ring-neutral-400",
+    "bg-transparent text-neutral-700 hover:bg-neutral-100 active:bg-neutral-200 focus-visible:ring-primary",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
@@ -35,6 +40,15 @@ const spinnerSizes: Record<ButtonSize, string> = {
   lg: "w-5 h-5",
 };
 
+export function buttonVariants(options?: {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  className?: string;
+}): string {
+  const { variant = "primary", size = "md", className } = options ?? {};
+  return cn(baseButtonClasses, variantStyles[variant], sizeStyles[size], className);
+}
+
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
@@ -45,7 +59,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       leftIcon,
       rightIcon,
       children,
-      className = "",
+      className,
       type = "button",
       ...props
     },
@@ -58,31 +72,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         type={type}
         disabled={isDisabled}
-        className={`inline-flex items-center justify-center rounded-full font-semibold transition-all duration-200 select-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none disabled:active:scale-100 ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
+        className={buttonVariants({ variant, size, className })}
         {...props}
       >
         {isLoading && (
-          <svg
-            className={`animate-spin ${spinnerSizes[size]} text-current shrink-0`}
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
+          <Loader2
+            className={cn("animate-spin text-current shrink-0", spinnerSizes[size])}
             aria-hidden="true"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            />
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            />
-          </svg>
+          />
         )}
 
         {!isLoading && leftIcon && (

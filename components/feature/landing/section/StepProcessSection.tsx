@@ -1,17 +1,12 @@
 import React from "react";
+import { Award, ClipboardCheck, User } from "lucide-react";
 import StepCard from "../component/StepCard";
-import RoleBadge from "@/components/ui/RoleBadge";
 
 export const StepProcessSection: React.FC = () => {
   return (
-    <section className="py-16 lg:py-24 bg-white">
+    <section id="alur-penilaian" className="py-16 lg:py-24 bg-white scroll-mt-24">
       <div className="layout-container space-y-12">
         <div className="w-full max-w-2xl mx-auto text-center space-y-3">
-          <div className="inline-flex items-center justify-center">
-            <RoleBadge variant="bph" size="sm" className="tracking-wider uppercase">
-              Proses Terstruktur
-            </RoleBadge>
-          </div>
           <h2 className="font-headline text-2xl sm:text-3xl md:text-4xl font-bold text-neutral-900 tracking-tight">
             Alur 3 Langkah Mudah Menuju Evaluasi Sah
           </h2>
@@ -24,24 +19,16 @@ export const StepProcessSection: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           <StepCard
             stepNumber="01"
-            icon={
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-            }
+            icon={<User className="w-5 h-5" aria-hidden="true" />}
             title="Login Akun Organisasi"
-            description="BPH dan anggota masuk menggunakan email institusi kampus atau ID fungsionaris terdaftar. Sistem otomatis menyesuaikan hak akses berdasarkan jabatan aktif."
-            footerBadge="Single Sign-On Aktif"
+            description="BPH dan anggota masuk menggunakan email dan kata sandi akun terdaftar. Sistem otomatis menyesuaikan hak akses berdasarkan peran aktif."
+            footerBadge="Autentikasi Berbasis Peran"
             badgeVariant="verified"
           />
 
           <StepCard
             stepNumber="02"
-            icon={
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-              </svg>
-            }
+            icon={<ClipboardCheck className="w-5 h-5" aria-hidden="true" />}
             title="Penilaian Objektif oleh BPH"
             description="Ketua divisi dan presidium mengisi rubrik penilaian berbasis indikator capaian proker, catatan kedisiplinan, serta masukan kualitatif yang membangun."
             footerBadge="Rubrik Standar Mutu"
@@ -50,14 +37,10 @@ export const StepProcessSection: React.FC = () => {
 
           <StepCard
             stepNumber="03"
-            icon={
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-              </svg>
-            }
+            icon={<Award className="w-5 h-5" aria-hidden="true" />}
             title="Raport Pribadi Terbit"
-            description="Hasil evaluasi otomatis teragregasi secara real-time. Setiap fungsionaris dapat mengunduh transkrip kinerja berstempel digital untuk portofolio &amp; arsip sidang LPJ."
-            footerBadge="Arsip Digital Permanen"
+            description="Hasil evaluasi teragregasi otomatis dan dapat ditinjau melalui portal pribadi. Setiap fungsionaris dapat mencetak transkrip kinerja untuk portofolio &amp; arsip sidang LPJ."
+            footerBadge="Transkrip Siap Cetak"
             badgeVariant="locked"
           />
         </div>
