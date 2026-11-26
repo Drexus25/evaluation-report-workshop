@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import { ClipboardCheck, Lock } from "lucide-react";
-import RoleBadge from "@/components/ui/RoleBadge";
 import Card from "@/components/ui/Card";
 import StatCounterItem from "../component/StatCounterItem";
 import DashboardMockup from "../component/DashboardMockup";
@@ -11,13 +10,6 @@ export const HeroSection: React.FC = () => {
     <section className="relative pt-8 pb-16 lg:pt-14 lg:pb-24 overflow-hidden">
       <div className="layout-container text-center space-y-8">
         <div className="inline-flex items-center justify-center">
-          <RoleBadge
-            variant="verified"
-            size="md"
-            className="hover:opacity-90 font-semibold shadow-xs tabular-nums"
-          >
-            SIKLUS EVALUASI SEMESTER GENAP 2024/2025
-          </RoleBadge>
         </div>
 
         <div className="w-full max-w-4xl mx-auto space-y-4">
