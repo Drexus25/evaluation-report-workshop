@@ -27,6 +27,8 @@ export interface User {
   nim?: string;
   department?: string;
   period?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface AuthLoginData {
@@ -99,4 +101,11 @@ export interface AspectPayload {
   name: string;
   description?: string;
   role_type: AspectRoleType;
+}
+
+export interface UpdateUserPayload {
+  name?: string;
+  role?: RoleType;
+  position?: string;
+  ministry?: string;
 }

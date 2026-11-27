@@ -8,49 +8,80 @@ import { Aspect } from "@/types";
 import { AspectFormValues } from "@/schemas/aspekSchema";
 import { useAspects } from "@/hooks/useAspects";
 import AspectTable from "./AspectTable";
+import AspectDetailModal from "./AspectDetailModal";
 import AspectFormModal from "./AspectFormModal";
 import AspectDeleteModal from "./AspectDeleteModal";
 
 export default function AdminAspekContainer() {
   const {
     aspects,
+    selectedAspect,
+    setSelectedAspect,
     isLoading,
+    isDetailLoading,
     isSubmitting,
     error,
     fieldErrors,
     clearFieldErrors,
     fetchAspects,
+    fetchAspectDetail,
     createAspect,
     updateAspect,
     deleteAspect,
   } = useAspects();
 
   const [filterRole, setFilterRole] = useState<"all" | "bph" | "staff">("all");
+  const [detailTargetAspect, setDetailTargetAspect] = useState<Aspect | null>(null);
   const [editingAspect, setEditingAspect] = useState<Aspect | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteTargetAspect, setDeleteTargetAspect] = useState<Aspect | null>(null);
 
   useEffect(() => {
-    if (!isModalOpen && !deleteTargetAspect) return;
+    if (!isModalOpen && !deleteTargetAspect && !detailTargetAspect) return;
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== "Escape" || isSubmitting) return;
-      if (deleteTargetAspect) {
+      if (event.key !== "Escape") return;
+      if (deleteTargetAspect && !isSubmitting) {
         setDeleteTargetAspect(null);
         return;
       }
-      if (isModalOpen) {
+      if (isModalOpen && !isSubmitting && !isDetailLoading) {
         clearFieldErrors();
         setIsModalOpen(false);
         setEditingAspect(null);
+        return;
+      }
+      if (detailTargetAspect) {
+        setDetailTargetAspect(null);
+        setSelectedAspect(null);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isModalOpen, deleteTargetAspect, isSubmitting, clearFieldErrors]);
+  }, [
+    isModalOpen,
+    deleteTargetAspect,
+    detailTargetAspect,
+    isSubmitting,
+    isDetailLoading,
+    clearFieldErrors,
+    setSelectedAspect,
+  ]);
 
   const filteredAspects = aspects.filter((item) =>
     filterRole === "all" ? true : item.role_type === filterRole
   );
+
+  const openDetailModal = async (aspect: Aspect) => {
+    setDetailTargetAspect(aspect);
+    setSelectedAspect(null);
+    const detail = await fetchAspectDetail(aspect.id);
+    if (!detail) setDetailTargetAspect(null);
+  };
+
+  const closeDetailModal = () => {
+    setDetailTargetAspect(null);
+    setSelectedAspect(null);
+  };
 
   const openCreateModal = () => {
     clearFieldErrors();
@@ -58,13 +89,28 @@ export default function AdminAspekContainer() {
     setIsModalOpen(true);
   };
 
-  const openEditModal = (aspect: Aspect) => {
+  const openEditModal = async (aspect: Aspect) => {
+    clearFieldErrors();
+    setEditingAspect(aspect);
+    setIsModalOpen(true);
+    const detail = await fetchAspectDetail(aspect.id);
+    if (detail) {
+      setEditingAspect(detail);
+    } else {
+      setIsModalOpen(false);
+      setEditingAspect(null);
+    }
+  };
+
+  const openEditFromDetail = (aspect: Aspect) => {
+    closeDetailModal();
     clearFieldErrors();
     setEditingAspect(aspect);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
+    if (isSubmitting || isDetailLoading) return;
     clearFieldErrors();
     setIsModalOpen(false);
     setEditingAspect(null);
@@ -172,13 +218,23 @@ export default function AdminAspekContainer() {
       <AspectTable
         aspects={filteredAspects}
         isLoading={isLoading}
+        onViewDetail={openDetailModal}
         onEdit={openEditModal}
         onDelete={setDeleteTargetAspect}
+      />
+
+      <AspectDetailModal
+        detailTarget={detailTargetAspect}
+        selectedAspect={selectedAspect}
+        isDetailLoading={isDetailLoading}
+        onClose={closeDetailModal}
+        onEdit={openEditFromDetail}
       />
 
       <AspectFormModal
         isOpen={isModalOpen}
         editingAspect={editingAspect}
+        isDetailLoading={isDetailLoading}
         isSubmitting={isSubmitting}
         fieldErrors={fieldErrors}
         onClose={closeModal}

@@ -8,6 +8,7 @@ import { cn } from "@/libs/cn";
 import {
   BarChart3,
   LayoutDashboard,
+  Users,
   Layers,
   FileSpreadsheet,
   FilePlus,
@@ -25,6 +26,7 @@ interface NavLinkItem {
 
 const navItems: NavLinkItem[] = [
   { label: "Dashboard", href: "/admin", icon: <LayoutDashboard size={18} aria-hidden="true" />, exact: true },
+  { label: "Data Fungsionaris", href: "/admin/fungsionaris", icon: <Users size={18} aria-hidden="true" /> },
   { label: "Kelola Aspek", href: "/admin/aspek", icon: <Layers size={18} aria-hidden="true" /> },
   { label: "Daftar Raport", href: "/admin/raport", icon: <FileSpreadsheet size={18} aria-hidden="true" />, exact: true },
   { label: "Input Raport Baru", href: "/admin/raport/create", icon: <FilePlus size={18} aria-hidden="true" /> },

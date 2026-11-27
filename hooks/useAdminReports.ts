@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import {
   ReportListItem,
   RaportData,
@@ -18,13 +18,19 @@ export function useAdminReports() {
   const [users, setUsers] = useState<User[]>([]);
   const [aspects, setAspects] = useState<Aspect[]>([]);
   const [selectedReport, setSelectedReport] = useState<RaportData | null>(null);
+  const [selectedUserDetail, setSelectedUserDetail] = useState<User | null>(
+    null
+  );
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isDetailLoading, setIsDetailLoading] = useState<boolean>(false);
+  const [isUserDetailLoading, setIsUserDetailLoading] =
+    useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [duplicateWarning, setDuplicateWarning] = useState<string | null>(null);
+  const userDetailRequestIdRef = useRef<number>(0);
 
   // Fetch daftar seluruh raport terbit
   const fetchReports = useCallback(async () => {
@@ -112,6 +118,41 @@ export function useAdminReports() {
         return null;
       } finally {
         setIsDetailLoading(false);
+      }
+    },
+    [toast]
+  );
+
+  // Fetch detail satu fungsionaris (GET /api/v1/admin/users/:id)
+  const fetchUserDetail = useCallback(
+    async (id: string): Promise<User | null> => {
+      userDetailRequestIdRef.current += 1;
+      const requestId = userDetailRequestIdRef.current;
+
+      setIsUserDetailLoading(true);
+      try {
+        const detail = await adminApi.getUserDetail(id);
+        if (requestId !== userDetailRequestIdRef.current) {
+          return null;
+        }
+        setSelectedUserDetail(detail);
+        return detail;
+      } catch (err) {
+        if (requestId === userDetailRequestIdRef.current) {
+          if (err instanceof ApiError) {
+            toast.error(err.message, "Gagal Memuat Detail Fungsionaris");
+          } else {
+            toast.error(
+              "Terjadi kegagalan saat memuat detail fungsionaris.",
+              "Gagal Memuat Detail Fungsionaris"
+            );
+          }
+        }
+        return null;
+      } finally {
+        if (requestId === userDetailRequestIdRef.current) {
+          setIsUserDetailLoading(false);
+        }
       }
     },
     [toast]
@@ -212,8 +253,11 @@ export function useAdminReports() {
     aspects,
     selectedReport,
     setSelectedReport,
+    selectedUserDetail,
+    setSelectedUserDetail,
     isLoading,
     isDetailLoading,
+    isUserDetailLoading,
     isSubmitting,
     isDeleting,
     error,
@@ -223,6 +267,7 @@ export function useAdminReports() {
     fetchFormPrerequisites,
     fetchDashboardData,
     fetchReportDetail,
+    fetchUserDetail,
     createReport,
     updateReport,
     deleteReport,

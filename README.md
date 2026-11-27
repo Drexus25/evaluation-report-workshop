@@ -12,7 +12,8 @@
 | `/login` | Public / Mahasiswa | Halaman masuk akun fungsionaris & administrator (dilengkapi fitur *Quick Fill* akun uji) |
 | `/raport` | Fungsionaris (`bph` / `staff`) | Raport pribadi via `GET /api/v1/me/report`, membedakan status 200 OK, 404 Belum Terbit, dan Network Error |
 | `/admin` | Admin Only | Dashboard rekapitulasi performa organisasi dan metrik evaluasi |
-| `/admin/aspek` | Admin Only | Manajemen master aspek penilaian (CRUD `GET/POST/PUT/DELETE /api/v1/admin/aspects`) |
+| `/admin/fungsionaris` | Admin Only | Daftar fungsionaris organisasi, modal detail profil, & edit data pengguna (`GET/PUT /api/v1/admin/users`, `GET /api/v1/admin/users/:id`) |
+| `/admin/aspek` | Admin Only | Manajemen master aspek penilaian (CRUD & detail `GET/POST/PUT/DELETE /api/v1/admin/aspects`, `GET /api/v1/admin/aspects/:id`) |
 | `/admin/raport` | Admin Only | Tabel rekap seluruh raport terbit & Modal Panel detail raport fungsionaris (`GET/DELETE /api/v1/admin/reports`) |
 | `/admin/raport/create` | Admin Only | Form input raport baru dinamis per role, real-time preview rata-rata, proteksi duplikasi 409 |
 
@@ -46,22 +47,25 @@ Seluruh pemanggilan data dan business logic dipisahkan ke dalam direktori `hooks
    * Fungsi `logout`: memanggil `POST /api/v1/auth/logout`, membersihkan `authStorage` (localStorage & sessionStorage), dan mencegah data akun sebelumnya tertinggal saat berganti akun.
    * Guard Navigasi: Rute `/admin/*` diproteksi oleh `AdminGuard` (pengguna non-admin dialihkan ke `/raport` dengan notifikasi 403). Rute `/raport` diproteksi oleh `AuthOnlyGuard`.
 2. **`useAspects` (`hooks/useAspects.ts`):**
-   * Mengelola state aspek penilaian, filter role (`all`, `bph`, `staff`), loading, dan mutasi.
+   * Mengelola state aspek penilaian, filter role (`all`, `bph`, `staff`), loading, detail aspek, dan mutasi.
+   * `fetchAspectDetail`: `GET /api/v1/admin/aspects/:id`.
    * `createAspect`: `POST /api/v1/admin/aspects`.
    * `updateAspect`: `PUT /api/v1/admin/aspects/:id`.
    * `deleteAspect`: `DELETE /api/v1/admin/aspects/:id` dengan dialog konfirmasi sebelum hapus.
    * Memperbarui tampilan secara otomatis setelah mutasi agar data selalu mutakhir.
-3. **`useAdminReports` (`hooks/useAdminReports.ts`):**
+3. **`useAdminUsers` (`hooks/useAdminUsers.ts`):**
+   * Mengelola daftar fungsionaris (`GET /api/v1/admin/users`), status raport (`GET /api/v1/admin/reports`), detail profil per ID (`GET /api/v1/admin/users/:id`), serta pembaruan data pengguna (`PUT /api/v1/admin/users/:id`).
+4. **`useAdminReports` (`hooks/useAdminReports.ts`):**
    * Mengambil daftar raport (`GET /api/v1/admin/reports`) dan detail raport (`GET /api/v1/admin/reports/:id`).
-   * Mengambil data fungsionaris (`GET /api/v1/admin/users`) dan aspek untuk form pembuatan raport.
+   * Mengambil data fungsionaris (`GET /api/v1/admin/users`, `GET /api/v1/admin/users/:id`) dan aspek untuk form pembuatan raport.
    * Menggunakan nilai **`average_score` dari respons Backend sebagai nilai final** tanpa menghitung ulang dengan rumus berbeda.
    * `deleteReport`: `DELETE /api/v1/admin/reports/:id` dengan modal konfirmasi.
-4. **`usePersonalReport` (`hooks/usePersonalReport.ts`):**
+5. **`usePersonalReport` (`hooks/usePersonalReport.ts`):**
    * Mengambil profil fungsionaris aktif (`GET /api/v1/me`) dan raport pribadi (`GET /api/v1/me/report`).
    * **Pembedaan tegas 404 vs Error Jaringan:**
      * Status **404**: Menampilkan *Empty State resmi* ("Raport Belum Diterbitkan").
      * Status **Network Error / 500**: Menampilkan *Error Card* dengan tombol "Coba Muat Ulang" (tidak ditampilkan seolah-olah data kosong).
-5. **`useToast` (`context/ToastContext.tsx`):**
+6. **`useToast` (`context/ToastContext.tsx`):**
    * Sistem notifikasi global (Success, Error, Warning, Info) berbasis **Framer Motion**.
    * Mendukung preferensi aksesibilitas `useReducedMotion()`.
 
