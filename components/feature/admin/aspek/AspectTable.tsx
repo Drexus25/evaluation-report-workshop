@@ -10,6 +10,7 @@ import Button from "@/components/ui/Button";
 interface AspectTableProps {
   aspects: Aspect[];
   isLoading: boolean;
+  onViewDetail: (aspect: Aspect) => void;
   onEdit: (aspect: Aspect) => void;
   onDelete: (aspect: Aspect) => void;
 }
@@ -17,6 +18,7 @@ interface AspectTableProps {
 export default function AspectTable({
   aspects,
   isLoading,
+  onViewDetail,
   onEdit,
   onDelete,
 }: AspectTableProps) {
@@ -94,6 +96,14 @@ export default function AspectTable({
 
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
+                        <Button
+                          variant="primary"
+                          size="sm"
+                          onClick={() => onViewDetail(aspect)}
+                          className="rounded-full text-xs"
+                        >
+                          Detail
+                        </Button>
                         <Button
                           variant="outline"
                           size="sm"

@@ -14,6 +14,7 @@ interface FungsionarisSelectorCardProps {
   selectedUser: User | null;
   activeAspectsCount: number;
   isLoading: boolean;
+  isUserDetailLoading?: boolean;
   isSubmitting: boolean;
   errorMessage?: string;
   onSelectUser: (userId: string) => void;
@@ -26,6 +27,7 @@ export default function FungsionarisSelectorCard({
   selectedUser,
   activeAspectsCount,
   isLoading,
+  isUserDetailLoading = false,
   isSubmitting,
   errorMessage,
   onSelectUser,
@@ -106,7 +108,7 @@ export default function FungsionarisSelectorCard({
                   .join("")}
               </div>
               <div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <span className="font-semibold text-neutral-900 text-sm">
                     {selectedUser.name}
                   </span>
@@ -116,9 +118,22 @@ export default function FungsionarisSelectorCard({
                   >
                     {selectedUser.role === "bph" ? "BPH" : "Staff"}
                   </RoleBadge>
+                  {isUserDetailLoading && (
+                    <span className="inline-flex items-center gap-1 text-[11px] font-medium text-neutral-500">
+                      <Loader2 className="w-3 h-3 animate-spin text-primary" />
+                      Sinkronisasi detail...
+                    </span>
+                  )}
                 </div>
                 <p className="text-xs text-neutral-600">
-                  {[selectedUser.position, selectedUser.ministry, selectedUser.email]
+                  {[
+                    selectedUser.position,
+                    selectedUser.ministry,
+                    selectedUser.department,
+                    selectedUser.nim ? `NIM ${selectedUser.nim}` : undefined,
+                    selectedUser.period,
+                    selectedUser.email,
+                  ]
                     .filter(Boolean)
                     .join(" • ")}
                 </p>

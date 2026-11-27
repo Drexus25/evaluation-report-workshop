@@ -13,6 +13,7 @@ import Input from "@/components/ui/Input";
 interface AspectFormModalProps {
   isOpen: boolean;
   editingAspect: Aspect | null;
+  isDetailLoading?: boolean;
   isSubmitting: boolean;
   fieldErrors: Record<string, string>;
   onClose: () => void;
@@ -22,6 +23,7 @@ interface AspectFormModalProps {
 export default function AspectFormModal({
   isOpen,
   editingAspect,
+  isDetailLoading = false,
   isSubmitting,
   fieldErrors,
   onClose,
@@ -44,20 +46,20 @@ export default function AspectFormModal({
   });
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || isDetailLoading) return;
     reset({
       name: editingAspect?.name ?? "",
       description: editingAspect?.description ?? "",
       role_type: editingAspect?.role_type ?? "bph",
     });
-  }, [isOpen, editingAspect, reset]);
+  }, [isOpen, isDetailLoading, editingAspect, reset]);
 
   return (
     <AnimatePresence>
       {isOpen && (
         <div
           className="fixed inset-0 z-50 bg-neutral-900/40 backdrop-blur-xs flex items-center justify-center p-4"
-          onClick={() => !isSubmitting && onClose()}
+          onClick={() => !isSubmitting && !isDetailLoading && onClose()}
         >
           <motion.div
             role="dialog"
@@ -86,7 +88,7 @@ export default function AspectFormModal({
               <button
                 type="button"
                 onClick={onClose}
-                disabled={isSubmitting}
+                disabled={isSubmitting || isDetailLoading}
                 aria-label="Tutup modal aspek"
                 className="text-neutral-500 hover:text-neutral-800 hover:bg-neutral-100 p-1.5 rounded-lg cursor-pointer transition-colors duration-150 ease-out disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
@@ -94,6 +96,14 @@ export default function AspectFormModal({
               </button>
             </div>
 
+            {isDetailLoading ? (
+              <div className="py-12 flex flex-col items-center justify-center gap-3">
+                <Loader2 className="w-6 h-6 text-primary animate-spin" />
+                <p className="text-xs text-neutral-600 font-medium">
+                  Mengambil data aspek terbaru dari server...
+                </p>
+              </div>
+            ) : (
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
               <Input
                 {...register("name")}
@@ -179,6 +189,7 @@ export default function AspectFormModal({
                 </Button>
               </div>
             </form>
+            )}
           </motion.div>
         </div>
       )}
