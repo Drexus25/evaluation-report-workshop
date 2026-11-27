@@ -18,8 +18,20 @@ import AspectScoreInputsCard from "./AspectScoreInputsCard";
 
 export default function AdminRaportCreateContainer() {
   const {
-    users, aspects, reports, isLoading, isSubmitting, error,
-    duplicateWarning, setDuplicateWarning, fetchFormPrerequisites, createReport,
+    users,
+    aspects,
+    reports,
+    selectedUserDetail,
+    setSelectedUserDetail,
+    isLoading,
+    isUserDetailLoading,
+    isSubmitting,
+    error,
+    duplicateWarning,
+    setDuplicateWarning,
+    fetchFormPrerequisites,
+    fetchUserDetail,
+    createReport,
   } = useAdminReports();
 
   const [selectedUserId, setSelectedUserId] = useState<string>("");
@@ -40,6 +52,13 @@ export default function AdminRaportCreateContainer() {
     [users, selectedUserId]
   );
 
+  const displayedSelectedUser = useMemo(() => {
+    if (selectedUserDetail && selectedUserDetail.id === selectedUserId) {
+      return selectedUserDetail;
+    }
+    return selectedUser;
+  }, [selectedUserDetail, selectedUserId, selectedUser]);
+
   const activeAspects: Aspect[] = useMemo(() => {
     if (!selectedUser) return [];
     return aspects.filter((a) => a.role_type === selectedUser.role);
@@ -47,6 +66,7 @@ export default function AdminRaportCreateContainer() {
 
   const handleSelectUser = (userId: string) => {
     setSelectedUserId(userId);
+    setSelectedUserDetail(null);
     setIsSuccess(false);
     setDuplicateWarning(null);
     const user = users.find((u) => u.id === userId);
@@ -64,6 +84,7 @@ export default function AdminRaportCreateContainer() {
         feedback: "",
       })),
     });
+    void fetchUserDetail(user.id);
   };
 
   const onSubmit = async (data: RaportFormValues) => {
@@ -115,9 +136,9 @@ export default function AdminRaportCreateContainer() {
 
       <form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <FungsionarisSelectorCard
-          users={users} reports={reports} selectedUserId={selectedUserId} selectedUser={selectedUser}
-          activeAspectsCount={activeAspects.length} isLoading={isLoading} isSubmitting={isSubmitting}
-          errorMessage={errors.user_id?.message} onSelectUser={handleSelectUser}
+          users={users} reports={reports} selectedUserId={selectedUserId} selectedUser={displayedSelectedUser}
+          activeAspectsCount={activeAspects.length} isLoading={isLoading} isUserDetailLoading={isUserDetailLoading}
+          isSubmitting={isSubmitting} errorMessage={errors.user_id?.message} onSelectUser={handleSelectUser}
         />
 
         {selectedUser && (

@@ -8,6 +8,7 @@ import {
   CreateReportPayload,
   UpdateReportPayload,
   AspectPayload,
+  UpdateUserPayload,
 } from "@/types";
 
 export { ApiError };
@@ -47,12 +48,21 @@ export const adminApi = {
       apiClient.get(role ? `/admin/users?role=${role}` : "/admin/users")
     ),
 
+  getUserDetail: (id: string) =>
+    extractData<User>(apiClient.get(`/admin/users/${id}`)),
+
+  updateUser: (id: string, payload: UpdateUserPayload) =>
+    extractData<User>(apiClient.put(`/admin/users/${id}`, payload)),
+
   getAspects: (roleType?: "bph" | "staff") =>
     extractData<Aspect[]>(
       apiClient.get(
         roleType ? `/admin/aspects?role_type=${roleType}` : "/admin/aspects"
       )
     ),
+
+  getAspectDetail: (id: string) =>
+    extractData<Aspect>(apiClient.get(`/admin/aspects/${id}`)),
 
   createAspect: (payload: AspectPayload) =>
     extractData<Aspect>(apiClient.post("/admin/aspects", payload)),
